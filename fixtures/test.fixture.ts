@@ -13,6 +13,7 @@ export const test = base.extend<BrpFixtures>({
   site: async ({ page: _page }, use) => {
     await use(siteContext);
   },
+
   homePage: async ({ page, site }, use) => {
     await use(new HomePage(page, site));
   },

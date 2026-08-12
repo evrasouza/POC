@@ -1,0 +1,43 @@
+{
+  "brand": "canam-offroad",
+  "locale": "br-pt",
+  "baseUrl": "https://can-am.brp.com/off-road/br/pt/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/off-road/br/pt/"
+    },
+    {
+      "text": "UTV´S",
+      "href": "/off-road/br/pt/modelos/sxs.html"
+    },
+    {
+      "text": "QUADRICICLOS",
+      "href": "/off-road/br/pt/modelos/atv.html"
+    },
+    {
+      "text": "MONTE O SEU",
+      "href": "/off-road/br/pt/monte-seu-proprio.html"
+    },
+    {
+      "text": "ACESSÓRIOS",
+      "href": "/off-road/br/pt/acessorios-pecas-equipamentos.html"
+    },
+    {
+      "text": "ENCONTRE UMA REVENDA",
+      "href": "/off-road/br/pt/encontre-uma-revenda.html"
+    },
+    {
+      "text": "MUNDO CAN-AM",
+      "href": "/off-road/br/pt/descubra.html"
+    },
+    {
+      "text": "MAIS",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "BR-PT",
+      "href": "/off-road/choose-country-region.html"
+    }
+  ]
+}

@@ -46,11 +46,32 @@ components/
   promotional-modal.component.ts
 
 utils/
+  navigation-data.ts
   url-builder.ts
 
+data/
+  navigation/
+    canam-offroad/
+      ca-en.json
+      fi-fi.json
+    canam-onroad/
+      ca-en.json
+      fi-en.json
+    seadoo/
+      ca-en.json
+      fi-fi.json
+    skidoo/
+      ca-en.json
+    lynx/
+      ca-en.json
+
 tests/
+  discovery/
+    header-navigation.discovery.spec.ts
   navigation/
     header.spec.ts
+  products/
+    product-navigation.spec.ts
   smoke/
     homepage.spec.ts
   unit/
@@ -61,8 +82,6 @@ types/
 
 scripts/
   run-playwright.mjs
-
-data/
 
 playwright.config.ts
 package.json
@@ -118,6 +137,78 @@ Can-Am Off-Road and Can-Am On-Road use product-line paths.
 Sea-Doo, Ski-Doo, and Lynx do not require the same product-line URL structure.
 
 These differences remain in configuration instead of being duplicated throughout tests.
+
+## Navigation Data
+
+Brand configuration and localized navigation data have different responsibilities.
+
+`config/brands.ts` contains stable brand-level configuration such as:
+
+```text
+brand id
+display name
+origin
+product line path
+```
+
+Localized navigation content is stored separately under:
+
+```text
+data/navigation/{brand}/{locale}.json
+```
+
+For example:
+
+```text
+data/navigation/canam-offroad/ca-en.json
+data/navigation/canam-offroad/fi-fi.json
+data/navigation/canam-onroad/fi-en.json
+data/navigation/seadoo/fi-fi.json
+```
+
+This separation is important because navigation labels and paths may differ between brands and locales.
+
+For example, a product category that uses `SXS` in one locale may use `SSV` in another locale, and localized URLs may also use different paths.
+
+A navigation data file has the following structure:
+
+```json
+{
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    }
+  ]
+}
+```
+
+Navigation data is therefore identified by:
+
+```text
+Brand + Locale
+```
+
+For example:
+
+```text
+canam-offroad + fi-fi
+```
+
+resolves to:
+
+```text
+data/navigation/canam-offroad/fi-fi.json
+```
+
+The helper `utils/navigation-data.ts` is responsible for loading the correct dataset for the current execution context.
 
 ## Locale Configuration
 
@@ -226,8 +317,12 @@ npm test -- --brand=seadoo --country=ca --language=en
 Run a specific test file:
 
 ```bash
-npm test tests/navigation/header.spec.ts --brand=seadoo --country=ca --language=en
+npm test -- tests/navigation/header.spec.ts --brand=seadoo --country=ca --language=en
 ```
+
+When running a specific test file, always use `--` before the test path and BRP-specific parameters.
+
+This ensures that npm forwards the parameters to `scripts/run-playwright.mjs` instead of interpreting `--brand`, `--country`, or `--language` as npm CLI options.
 
 ### Smoke Tests
 
@@ -447,6 +542,236 @@ Current coverage verifies that:
 
 The same tests are reused across supported BRP brands.
 
+## Navigation Discovery
+
+`tests/discovery/header-navigation.discovery.spec.ts` is a discovery utility used to inspect the real navigation rendered by a specific brand and locale.
+
+It collects visible navigation links and exports them as JSON.
+
+Example:
+
+```bash
+npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=canam-offroad --country=fi --language=fi
+```
+
+Another example:
+
+```bash
+npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=seadoo --country=ca --language=fr
+```
+
+Generated discovery files are written to:
+
+```text
+test-results/navigation-discovery/
+```
+
+For example:
+
+```text
+test-results/navigation-discovery/canam-offroad-fi-fi.json
+```
+
+The generated JSON contains information such as:
+
+```json
+{
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    }
+  ]
+}
+```
+
+## Navigation Discovery
+
+`tests/discovery/header-navigation.discovery.spec.ts` is a discovery utility used to inspect the real navigation rendered by a specific brand and locale.
+
+It collects visible navigation links and exports them as JSON.
+
+Example:
+
+```bash
+npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=canam-offroad --country=fi --language=fi
+```
+
+Another example:
+
+```bash
+npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=seadoo --country=ca --language=fr
+```
+
+Generated discovery files are written to:
+
+```text
+test-results/navigation-discovery/
+```
+
+For example:
+
+```text
+test-results/navigation-discovery/canam-offroad-fi-fi.json
+```
+
+The generated JSON contains information such as:
+
+```json
+{
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    }
+  ]
+}
+```
+
+### Discovery vs Regression Data
+
+Discovery output represents what the website currently exposes.
+
+It should not automatically become expected regression data.
+
+The intended workflow is:
+
+```text
+BRP Website
+    ↓
+Navigation Discovery
+    ↓
+test-results/navigation-discovery/*.json
+    ↓
+QA Review
+    ↓
+data/navigation/{brand}/{locale}.json
+    ↓
+Regression Test
+```
+
+After reviewing the generated discovery file, copy or adapt the approved navigation data into the appropriate version-controlled dataset.
+
+For example:
+
+```text
+Discovery:
+
+test-results/navigation-discovery/canam-offroad-fi-fi.json
+
+        ↓ QA review
+
+Regression data:
+
+data/navigation/canam-offroad/fi-fi.json
+```
+
+This prevents an incorrect website change from being automatically accepted as the new expected result.
+
+## Product Navigation Tests
+
+`tests/products/product-navigation.spec.ts` validates navigation against the reviewed data stored under:
+
+```text
+data/navigation/{brand}/{locale}.json
+```
+
+Example:
+
+```bash
+npm test -- tests/products/product-navigation.spec.ts --brand=canam-offroad --country=fi --language=fi
+```
+
+This execution loads:
+
+```text
+data/navigation/canam-offroad/fi-fi.json
+```
+
+Another example:
+
+```bash
+npm test -- tests/products/product-navigation.spec.ts --brand=seadoo --country=ca --language=en
+```
+
+This execution loads:
+
+```text
+data/navigation/seadoo/ca-en.json
+```
+
+The test validates the expected navigation entries against the navigation rendered by the website.
+
+This allows localized navigation differences to be validated without hardcoding localized labels and URLs directly inside test specifications or `brands.ts`.
+
+### Debugging Product Navigation
+
+To inspect the execution step by step:
+
+```bash
+npm run test:debug -- tests/products/product-navigation.spec.ts --brand=canam-offroad --country=fi --language=fi
+```
+
+To watch the browser without Playwright Inspector:
+
+```bash
+npm run test:headed -- tests/products/product-navigation.spec.ts --brand=canam-offroad --country=fi --language=fi
+```
+
+### Discovery vs Regression Data
+
+Discovery output represents what the website currently exposes.
+
+It should not automatically become expected regression data.
+
+The intended workflow is:
+
+```text
+BRP Website
+    ↓
+Navigation Discovery
+    ↓
+test-results/navigation-discovery/*.json
+    ↓
+QA Review
+    ↓
+data/navigation/{brand}/{locale}.json
+    ↓
+Regression Test
+```
+
+After reviewing the generated discovery file, copy or adapt the approved navigation data into the appropriate version-controlled dataset.
+
+For example:
+
+```text
+Discovery:
+
+test-results/navigation-discovery/canam-offroad-fi-fi.json
+
+        ↓ QA review
+
+Regression data:
+
+data/navigation/canam-offroad/fi-fi.json
+```
+
+This prevents an incorrect website change from being automatically accepted as the new expected result.
+
 ## Handling Cookies and Promotional Overlays
 
 Public BRP websites may display cookie consent widgets or promotional modals that prevent normal page interaction.
@@ -505,15 +830,41 @@ Shared tests should not require changes.
 
 ## Adding Another Locale
 
-No source change should be required for a standard country/language URL.
+No source-code change should normally be required for a standard country/language URL.
 
-Example:
+For smoke validation, a new locale can be tested directly:
 
 ```bash
-npm test -- --brand=canam-offroad --country=br --language=pt
+npm test -- tests/smoke/homepage.spec.ts --brand=canam-offroad --country=br --language=pt
 ```
 
-If a future website has a non-standard locale format, that knowledge should remain in the configuration or URL-builder layer.
+For navigation regression coverage, first run navigation discovery:
+
+```bash
+npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=canam-offroad --country=br --language=pt
+```
+
+Review the generated file:
+
+```text
+test-results/navigation-discovery/canam-offroad-br-pt.json
+```
+
+Then create the approved regression dataset:
+
+```text
+data/navigation/canam-offroad/br-pt.json
+```
+
+Finally run:
+
+```bash
+npm test -- tests/products/product-navigation.spec.ts --brand=canam-offroad --country=br --language=pt
+```
+
+This process should be repeated for each brand and locale combination that requires navigation regression coverage.
+
+The framework does not assume that navigation labels or paths are identical across locales.
 
 ## Creating a New Page Object
 
@@ -577,7 +928,7 @@ Avoid duplicating tests by brand or locale unless the actual user experience req
 
 ## Current Test Coverage
 
-The framework currently provides three layers of coverage:
+The framework currently provides five layers of coverage:
 
 ```text
 Unit
@@ -588,18 +939,74 @@ Smoke
 
 Navigation
   └── Shared header and internal navigation behavior
+
+Discovery
+  └── Navigation extraction by brand and locale
+
+Products
+  └── Navigation validation using reviewed brand/locale datasets
 ```
 
-Future coverage can extend this architecture into:
+The current architecture establishes the foundation for future end-to-end business coverage:
 
 ```text
+Homepage
+    ↓
+Navigation
+    ↓
 Product Discovery
-      ↓
+    ↓
 Product Detail
-      ↓
+    ↓
 Lead Form
-      ↓
+    ↓
 Dealer Selection
-      ↓
+    ↓
 Lead Submission
+```
+
+## Navigation Dataset Maintenance Workflow
+
+When adding or reviewing navigation coverage:
+
+1. Run discovery for the required brand and locale.
+
+```bash
+npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=canam-offroad --country=fi --language=fi
+```
+
+2. Review the generated JSON under:
+
+```text
+test-results/navigation-discovery/
+```
+
+3. Confirm that labels and URLs represent the expected website behavior.
+
+4. Add or update the approved dataset under:
+
+```text
+data/navigation/{brand}/{locale}.json
+```
+
+5. Run the regression test:
+
+```bash
+npm test -- tests/products/product-navigation.spec.ts --brand=canam-offroad --country=fi --language=fi
+```
+
+6. Run the project quality checks:
+
+```bash
+npm run format
+npm run format:check
+npm run lint
+npm run typecheck
+npm test
+```
+
+7. Review the Playwright HTML report when necessary:
+
+```bash
+npm run report
 ```

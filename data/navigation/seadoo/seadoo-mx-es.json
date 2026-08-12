@@ -1,0 +1,39 @@
+{
+  "brand": "seadoo",
+  "locale": "mx-es",
+  "baseUrl": "https://sea-doo.brp.com/mx/es/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/mx/es/"
+    },
+    {
+      "text": "Motos acuáticas",
+      "href": "/mx/es/modelos.html"
+    },
+    {
+      "text": "Pontones",
+      "href": "/mx/es/pontones/switch-intro.html"
+    },
+    {
+      "text": "Descubre Sea‑Doo",
+      "href": "/mx/es/descubrir.html"
+    },
+    {
+      "text": "Construir y Precio",
+      "href": "/mx/es/herramientas-de-compra/personaliza-y-precio.html"
+    },
+    {
+      "text": "Promociones",
+      "href": "/mx/es/herramientas-de-compra/promociones.html"
+    },
+    {
+      "text": "Más",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "mx-es",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}

@@ -21,6 +21,10 @@ export class HeaderComponent {
     return this.links.count();
   }
 
+  async getNavigationLinkByPath(path: string): Promise<Locator> {
+    return this.navigation.locator(`a[href*="${path}"]`).first();
+  }
+
   async getFirstInternalNavigableLink(): Promise<Locator | null> {
     const count = await this.links.count();
     const currentHostname = new URL(this.page.url()).hostname;

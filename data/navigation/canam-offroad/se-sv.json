@@ -1,0 +1,39 @@
+{
+  "brand": "canam-offroad",
+  "locale": "se-sv",
+  "baseUrl": "https://can-am.brp.com/off-road/se/sv/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "https://can-am.brp.com/se/sv/"
+    },
+    {
+      "text": "SIDE‑BY‑SIDE",
+      "href": "/off-road/se/sv/modeller/sxs.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/se/sv/modeller/atv.html"
+    },
+    {
+      "text": "3-HJULING",
+      "href": "https://can-am.brp.com/on-road/se/sv/modeller/3-hjuliga-fordon.html"
+    },
+    {
+      "text": "MOTORCYKLAR",
+      "href": "https://can-am.brp.com/on-road/se/sv/modeller/can-am-elektriska-motorcyklar.html"
+    },
+    {
+      "text": "TILLBEHÖR, RESERVDELAR OCH KLÄDER",
+      "href": "https://can-am.brp.com/se/sv/tillbehor-reservdelar-forarutrustning.html"
+    },
+    {
+      "text": "MER",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "SE-SV",
+      "href": "/off-road/choose-country-region.html"
+    }
+  ]
+}

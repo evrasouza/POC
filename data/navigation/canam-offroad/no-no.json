@@ -1,0 +1,39 @@
+{
+  "brand": "canam-offroad",
+  "locale": "no-no",
+  "baseUrl": "https://can-am.brp.com/off-road/no/no/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "https://can-am.brp.com/no/no/"
+    },
+    {
+      "text": "SSV",
+      "href": "/off-road/no/no/modeller/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/no/no/modeller/atv.html"
+    },
+    {
+      "text": "3-WHEEL VEHICLES",
+      "href": "https://can-am.brp.com/on-road/no/en/models/3-wheel-vehicles.html"
+    },
+    {
+      "text": "MOTORSYKLER",
+      "href": "https://can-am.brp.com/on-road/no/en/models/can-am-electric-motorcycles.html"
+    },
+    {
+      "text": "TILBEHØR, DELER OG KLÆR",
+      "href": "https://can-am.brp.com/no/no/tilbehor-deler-klaer.html"
+    },
+    {
+      "text": "MER",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "NO-NO",
+      "href": "/off-road/choose-country-region.html"
+    }
+  ]
+}

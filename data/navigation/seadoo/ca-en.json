@@ -1,0 +1,43 @@
+{
+  "brand": "seadoo",
+  "locale": "ca-en",
+  "baseUrl": "https://sea-doo.brp.com/ca/en/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/ca/en/"
+    },
+    {
+      "text": "Personal Watercraft",
+      "href": "/ca/en/models/personal-watercrafts.html"
+    },
+    {
+      "text": "Pontoons",
+      "href": "/ca/en/models/pontoons.html"
+    },
+    {
+      "text": "Accessories, Parts & Gear",
+      "href": "https://sea-doo-shop.brp.com/ca/en/"
+    },
+    {
+      "text": "Build your own",
+      "href": "/ca/en/shopping-tools/customize-your-own.html"
+    },
+    {
+      "text": "Promotions",
+      "href": "/ca/en/promotions.html"
+    },
+    {
+      "text": "Find a dealer",
+      "href": "/ca/en/shopping-tools/find-a-dealer.html"
+    },
+    {
+      "text": "More",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "ca-en",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}

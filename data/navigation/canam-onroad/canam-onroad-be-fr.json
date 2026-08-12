@@ -1,0 +1,43 @@
+{
+  "brand": "canam-onroad",
+  "locale": "be-fr",
+  "baseUrl": "https://can-am.brp.com/on-road/be/fr/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "https://can-am.brp.com/be/fr/"
+    },
+    {
+      "text": "SIDE‑BY‑SIDE",
+      "href": "https://can-am.brp.com/off-road/be/fr/modeles/sxs.html"
+    },
+    {
+      "text": "QUAD",
+      "href": "https://can-am.brp.com/off-road/be/fr/modeles/atv.html"
+    },
+    {
+      "text": "3-ROUES",
+      "href": "/on-road/be/fr/modeles/vehicules-3-roues.html"
+    },
+    {
+      "text": "MOTOS",
+      "href": "/on-road/be/fr/modeles/motos.html"
+    },
+    {
+      "text": "PIÈCES, ACCESSOIRES & VÊTEMENTS",
+      "href": "https://can-am.brp.com/be/fr/accessoires-pieces-detachees-vetements.html"
+    },
+    {
+      "text": "CONFIGURATEUR",
+      "href": "https://can-am.brp.com/be/fr/build-your-can-am.html"
+    },
+    {
+      "text": "PLUS",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "BE-FR",
+      "href": "/on-road/choose-country-region.html"
+    }
+  ]
+}

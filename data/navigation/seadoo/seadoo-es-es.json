@@ -1,0 +1,39 @@
+{
+  "brand": "seadoo",
+  "locale": "es-es",
+  "baseUrl": "https://sea-doo.brp.com/es/es/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/es/es/"
+    },
+    {
+      "text": "Modelos",
+      "href": "/es/es/modelos.html"
+    },
+    {
+      "text": "Descubrir Sea-Doo",
+      "href": "/es/es/descubrir.html"
+    },
+    {
+      "text": "Construir y Precio",
+      "href": "/es/es/herramientas-de-compra/construir-y-precio.html"
+    },
+    {
+      "text": "Partes, Accesorios y Equipo Personal",
+      "href": "/es/es/accesorios-piezas-equipo.html"
+    },
+    {
+      "text": "Propietarios",
+      "href": "/es/es/propietarios.html"
+    },
+    {
+      "text": "Más",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "es-es",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}

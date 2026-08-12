@@ -1,0 +1,39 @@
+{
+  "brand": "seadoo",
+  "locale": "ca-fr",
+  "baseUrl": "https://sea-doo.brp.com/ca/fr/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/ca/fr/"
+    },
+    {
+      "text": "Motomarines",
+      "href": "/ca/fr/modeles/motomarines.html"
+    },
+    {
+      "text": "Pontons",
+      "href": "/ca/fr/modeles/pontons.html"
+    },
+    {
+      "text": "Accessoires, pièces et vêtements",
+      "href": "https://sea-doo-shop.brp.com/ca/fr/"
+    },
+    {
+      "text": "Configurez le vôtre",
+      "href": "/ca/fr/outils-de-magasinage/personnalisez-le-votre.html"
+    },
+    {
+      "text": "Promotions",
+      "href": "/ca/fr/promotions.html"
+    },
+    {
+      "text": "Plus",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "ca-fr",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}

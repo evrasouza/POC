@@ -1,0 +1,39 @@
+{
+  "brand": "canam-onroad",
+  "locale": "es-es",
+  "baseUrl": "https://can-am.brp.com/on-road/es/es/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "https://can-am.brp.com/es/es/"
+    },
+    {
+      "text": "SIDE‑BY‑SIDE",
+      "href": "https://can-am.brp.com/off-road/es/es/models/sxs.html"
+    },
+    {
+      "text": "ATV",
+      "href": "https://can-am.brp.com/off-road/es/es/models/atv.html"
+    },
+    {
+      "text": "VEHÍCULOS 3 RUEDAS",
+      "href": "/on-road/es/es/modelos/gama-3-ruedas.html"
+    },
+    {
+      "text": "MOTOS",
+      "href": "/on-road/es/es/modelos/motos.html"
+    },
+    {
+      "text": "ACCESORIOS, REPUESTOS Y ROPA",
+      "href": "https://can-am.brp.com/es/es/accesorios-repuestos-ropa.html"
+    },
+    {
+      "text": "MÁS",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "ES-ES",
+      "href": "/on-road/choose-country-region.html"
+    }
+  ]
+}
