@@ -10,6 +10,7 @@
     "test:headed": "node ./scripts/run-playwright.mjs --headed --project=chromium",
     "test:ui": "node ./scripts/run-playwright.mjs --ui",
     "test:debug": "node ./scripts/run-playwright.mjs --debug --project=chromium",
+    "test:unit": "playwright test tests/unit",
     "report": "playwright show-report",
     "lint": "eslint .",
     "format": "prettier --write .",
