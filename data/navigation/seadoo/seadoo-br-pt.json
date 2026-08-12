@@ -1,0 +1,39 @@
+{
+  "brand": "seadoo",
+  "locale": "br-pt",
+  "baseUrl": "https://sea-doo.brp.com/br/pt/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/br/pt/"
+    },
+    {
+      "text": "Motos Aquáticas",
+      "href": "/br/pt/modelos/motos-aquaticas.html"
+    },
+    {
+      "text": "Pontoons",
+      "href": "/br/pt/pontoons/switch-intro.html"
+    },
+    {
+      "text": "Descubra Sea‑Doo",
+      "href": "/br/pt/descubra.html"
+    },
+    {
+      "text": "Monte o seu",
+      "href": "/br/pt/ferramentas-de-compras/monte-o-seu.html"
+    },
+    {
+      "text": "Peças, Acessórios e Vestuário Sea-Doo",
+      "href": "/br/pt/pecas-acessorios-e-vestuario.html"
+    },
+    {
+      "text": "Mais",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "br-pt",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}

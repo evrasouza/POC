@@ -1,0 +1,43 @@
+{
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "https://can-am.brp.com/fi/fi/"
+    },
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    },
+    {
+      "text": "KOLMIPYÖRÄISET",
+      "href": "https://can-am.brp.com/on-road/fi/en/models/3-wheel-vehicles.html"
+    },
+    {
+      "text": "MOOTTORIPYÖRÄT",
+      "href": "https://can-am.brp.com/on-road/fi/en/models/can-am-electric-motorcycles.html"
+    },
+    {
+      "text": "LISÄVARUSTEET, OSAT JA VAATTEET",
+      "href": "https://can-am.brp.com/fi/fi/lisavarusteet-osat-vaatteet.html"
+    },
+    {
+      "text": "SUUNNITTELE OMASI",
+      "href": "https://can-am.brp.com/fi/fi/rakenna-oma-can-am.html"
+    },
+    {
+      "text": "LISÄÄ",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "FI-FI",
+      "href": "/off-road/choose-country-region.html"
+    }
+  ]
+}

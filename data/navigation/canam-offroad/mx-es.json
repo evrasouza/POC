@@ -1,0 +1,39 @@
+{
+  "brand": "canam-offroad",
+  "locale": "mx-es",
+  "baseUrl": "https://can-am.brp.com/off-road/mx/es/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "https://can-am.brp.com/mx/es/"
+    },
+    {
+      "text": "SIDE‑BY‑SIDE",
+      "href": "/off-road/mx/es/modelos/sxs.html"
+    },
+    {
+      "text": "CUATRIMOTOS",
+      "href": "/off-road/mx/es/modelos/atv.html"
+    },
+    {
+      "text": "VEHÍCULOS 3 RUEDAS",
+      "href": "https://can-am.brp.com/on-road/mx/es/modelos.html"
+    },
+    {
+      "text": "MOTOS",
+      "href": "https://can-am.brp.com/on-road/mx/es/modelos/motocicletas-electricas-can-am.html"
+    },
+    {
+      "text": "ACCESORIOS, PARTES Y ROPA",
+      "href": "https://can-am.brp.com/mx/es/accesorios-partes-ropa.html"
+    },
+    {
+      "text": "MÁS",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "MX-ES",
+      "href": "/off-road/choose-country-region.html"
+    }
+  ]
+}
