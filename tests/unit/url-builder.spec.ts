@@ -50,9 +50,7 @@ test.describe('URL Builder', () => {
       path: '/models/sxs',
     });
 
-    expect(url).toBe(
-      'https://can-am.brp.com/off-road/ca/en/models/sxs/',
-    );
+    expect(url).toBe('https://can-am.brp.com/off-road/ca/en/models/sxs/');
   });
 
   test('normalizes internal path without leading and trailing slashes', () => {
@@ -63,9 +61,7 @@ test.describe('URL Builder', () => {
       path: 'models/sxs',
     });
 
-    expect(url).toBe(
-      'https://can-am.brp.com/off-road/ca/en/models/sxs/',
-    );
+    expect(url).toBe('https://can-am.brp.com/off-road/ca/en/models/sxs/');
   });
 
   test('normalizes uppercase country and language', () => {
