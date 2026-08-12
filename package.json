@@ -1,0 +1,29 @@
+{
+  "name": "brp-public-websites-playwright",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configuration-driven Playwright automation framework for BRP public websites.",
+  "type": "module",
+  "scripts": {
+    "test": "node ./scripts/run-playwright.mjs",
+    "test:smoke": "node ./scripts/run-playwright.mjs tests/smoke --project=chromium",
+    "test:headed": "node ./scripts/run-playwright.mjs --headed --project=chromium",
+    "test:ui": "node ./scripts/run-playwright.mjs --ui",
+    "test:debug": "node ./scripts/run-playwright.mjs --debug --project=chromium",
+    "report": "playwright show-report",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^24.0.0",
+    "dotenv": "^17.2.1",
+    "eslint": "^10.8.1",
+    "prettier": "^3.9.6",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.40.0"
+  }
+}
