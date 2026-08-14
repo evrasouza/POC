@@ -1,3 +1,4 @@
+// components/promotional-modal.component.ts
 import type { Locator, Page } from '@playwright/test';
 
 export class PromotionalModalComponent {
