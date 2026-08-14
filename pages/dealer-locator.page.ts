@@ -1,133 +1,143 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Locator, Page, Response } from '@playwright/test';
 import { getDealerLocatorConfig } from '../config/dealer-locator.js';
 import type { SiteContext } from '../types/site.types.js';
 import { BasePage } from './base.page.js';
 
 export class DealerLocatorPage extends BasePage {
-    readonly searchInput: Locator;
-    readonly dealerPhones: Locator;
+  readonly searchInput: Locator;
+  readonly dealerPhones: Locator;
 
-    constructor(
-        private readonly dealerPage: Page,
-        site: SiteContext,
-    ) {
-        super(dealerPage, site);
+  constructor(
+    private readonly dealerPage: Page,
+    site: SiteContext,
+  ) {
+    super(dealerPage, site);
 
-        // Só existe um searchbox relevante no Dealer Locator.
-        // Não depende de "Enter Your Location" / "Entrer votre emplacement".
-        this.searchInput = dealerPage
-            .getByRole('searchbox')
-            .first();
+    this.searchInput = dealerPage.getByRole('searchbox').first();
 
-        // Excelente indicador de dealer retornado e independente de idioma.
-        this.dealerPhones = dealerPage
-            .locator('main a[href^="tel:"]:visible');
+    this.dealerPhones = dealerPage.locator('main a[href^="tel:"]:visible');
+  }
+
+  async goto(): Promise<Response | null> {
+    const origin = new URL(this.site.baseUrl).origin;
+
+    await this.dealerPage.context().grantPermissions(['geolocation'], { origin });
+
+    await this.dealerPage.context().setGeolocation({
+      latitude: 45.5017,
+      longitude: -73.5673,
+    });
+
+    const dealerConfig = getDealerLocatorConfig(this.site.brand.id);
+
+    const dealerUrl = dealerConfig.getUrl(this.site);
+
+    const response = await this.dealerPage.goto(dealerUrl, {
+      waitUntil: 'domcontentloaded',
+    });
+
+    await this.handleDealerConsent();
+
+    await this.dismissDealerPromoIfVisible();
+
+    await this.searchInput.waitFor({
+      state: 'visible',
+      timeout: 15_000,
+    });
+
+    return response;
+  }
+
+  async searchLocation(location: string): Promise<void> {
+    await this.handleDealerConsent();
+
+    await this.dismissDealerPromoIfVisible();
+
+    await this.searchInput.fill(location);
+
+    const autocompleteOption = this.dealerPage.locator('.pac-item:visible').first();
+
+    const autocompleteVisible = await autocompleteOption
+      .waitFor({
+        state: 'visible',
+        timeout: 3_000,
+      })
+      .then(() => true)
+      .catch(() => false);
+
+    if (autocompleteVisible) {
+      await autocompleteOption.click();
+    }
+  }
+
+  async waitForSearchResults(): Promise<void> {
+    await this.dealerPhones.first().waitFor({
+      state: 'visible',
+      timeout: 20_000,
+    });
+
+    await this.dismissDealerPromoIfVisible();
+  }
+
+  async takeScreenshot(name = 'dealer-search-result.png'): Promise<void> {
+    await this.dealerPage.screenshot({
+      path: `test-results/${name}`,
+      fullPage: true,
+    });
+  }
+
+  private async handleDealerConsent(): Promise<void> {
+    const acceptButton = this.dealerPage
+      .getByRole('button', {
+        name: /accept all cookies|accepter les témoins|aceitar cookies|ok!/i,
+      })
+      .first();
+
+    if (await acceptButton.isVisible().catch(() => false)) {
+      await acceptButton.click();
+
+      return;
     }
 
-    async goto(): Promise<void> {
-        const origin = new URL(this.site.baseUrl).origin;
+    const continueWithoutConsent = this.dealerPage
+      .getByRole('button', {
+        name: /continue without consent/i,
+      })
+      .first();
 
-        await this.dealerPage.context().grantPermissions(
-            ['geolocation'],
-            { origin },
-        );
+    if (await continueWithoutConsent.isVisible().catch(() => false)) {
+      await continueWithoutConsent.click();
 
-        await this.dealerPage.context().setGeolocation({
-            latitude: 45.5017,
-            longitude: -73.5673,
-        });
-
-        const dealerConfig = getDealerLocatorConfig(
-            this.site.brand.id,
-        );
-
-        await super.goto(dealerConfig.path);
-
-        await this.handleDealerConsent();
-
-        await this.searchInput.waitFor({
-            state: 'visible',
-            timeout: 15_000,
-        });
+      return;
     }
 
-    async searchLocation(location: string): Promise<void> {
-        await this.handleDealerConsent();
+    const confirmButton = this.dealerPage
+      .getByRole('button', {
+        name: /confirm|confirmer/i,
+      })
+      .first();
 
-        await this.searchInput.fill(location);
+    if (await confirmButton.isVisible().catch(() => false)) {
+      await confirmButton.click();
+    }
+  }
 
-        const autocompleteOption = this.dealerPage
-            .locator('.pac-item:visible')
-            .first();
+  private async dismissDealerPromoIfVisible(): Promise<void> {
+    const dialog = this.dealerPage
+      .getByRole('dialog')
+      .filter({
+        has: this.dealerPage.locator('iframe'),
+      })
+      .first();
 
-        if (await autocompleteOption.isVisible()) {
-            await autocompleteOption.click();
-        }
+    if (!(await dialog.isVisible().catch(() => false))) {
+      return;
     }
 
-    async waitForSearchResults(): Promise<void> {
-        /*
-         * Não validamos "35 results", "kilometers away",
-         * "kilomètres", etc.
-         *
-         * Um link tel: visível significa que pelo menos
-         * um dealer real foi retornado.
-         */
-        await this.dealerPhones.first().waitFor({
-            state: 'visible',
-            timeout: 20_000,
-        });
+    const closeButton = dialog.locator('button').last();
 
-        await this.dismissDealerPromoIfVisible();
+    if (await closeButton.isVisible().catch(() => false)) {
+      await closeButton.click();
     }
-
-    async takeScreenshot(
-        name = 'dealer-search-result.png',
-    ): Promise<void> {
-        await this.dealerPage.screenshot({
-            path: `test-results/${name}`,
-        });
-    }
-
-    private async handleDealerConsent(): Promise<void> {
-        const acceptButton = this.dealerPage
-            .getByRole('button', {
-                name: /accept all cookies|accepter les témoins|aceitar cookies/i,
-            })
-            .first();
-
-        if (await acceptButton.isVisible().catch(() => false)) {
-            await acceptButton.click();
-            return;
-        }
-
-        const confirmButton = this.dealerPage
-            .getByRole('button', {
-                name: /confirm|confirmer/i,
-            })
-            .first();
-
-        if (await confirmButton.isVisible().catch(() => false)) {
-            await confirmButton.click();
-        }
-    }
-
-    private async dismissDealerPromoIfVisible(): Promise<void> {
-        const dialog = this.dealerPage
-            .getByRole('dialog')
-            .filter({
-                has: this.dealerPage.locator('iframe'),
-            })
-            .first();
-
-        if (!(await dialog.isVisible().catch(() => false))) {
-            return;
-        }
-
-        const closeButton = dialog.locator('button').last();
-
-        if (await closeButton.isVisible().catch(() => false)) {
-            await closeButton.click();
-        }
-    }
+  }
 }

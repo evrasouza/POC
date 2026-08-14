@@ -1,0 +1,43 @@
+{
+  "brand": "lynx",
+  "locale": "ca-fr",
+  "baseUrl": "https://www.brplynx.com/ca/fr/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/ca/fr/"
+    },
+    {
+      "text": "MODÈLES",
+      "href": "/ca/fr/modeles.html"
+    },
+    {
+      "text": "ACCESSOIRES ET ÉQUIPEMENTS",
+      "href": "/ca/fr/accessoires-et-equipements.html"
+    },
+    {
+      "text": "PERSONNALISEZ LE VÔTRE",
+      "href": "/ca/fr/outils-de-magasinage/personnalisez-le-votre.html"
+    },
+    {
+      "text": "DÉCOUVRIR LYNX",
+      "href": "/ca/fr/decouvrir.html"
+    },
+    {
+      "text": "TROUVEZ UN CONCESSIONNAIRE",
+      "href": "/ca/fr/outils-de-magasinage/trouvez-votre-concessionnaire.html"
+    },
+    {
+      "text": "PROPRIÉTAIRES",
+      "href": "/ca/fr/proprietaires.html"
+    },
+    {
+      "text": "PLUS",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "CA-FR",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}

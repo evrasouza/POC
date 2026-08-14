@@ -7,16 +7,8 @@ export type DealerData = {
   location: string;
 };
 
-export async function loadDealerData(
-  brand: BrandId,
-  locale: string,
-): Promise<DealerData> {
-  const filePath = path.resolve(
-    'data',
-    'dealers',
-    brand,
-    `${locale}.json`,
-  );
+export async function loadDealerData(brand: BrandId, locale: string): Promise<DealerData> {
+  const filePath = path.resolve('data', 'dealers', brand, `${locale}.json`);
 
   const content = await fs.readFile(filePath, 'utf-8');
 

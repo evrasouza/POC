@@ -1,42 +1,44 @@
-import type { BrandId } from '../types/site.types.js';
+import type { BrandId, SiteContext } from '../types/site.types.js';
 
 type DealerLocatorConfig = {
-  path: string;
+  getUrl: (site: SiteContext) => string;
 };
 
-const dealerLocatorConfig: Partial<
-  Record<BrandId, DealerLocatorConfig>
-> = {
+const dealerLocatorConfig: Partial<Record<BrandId, DealerLocatorConfig>> = {
   seadoo: {
-    path: '/shopping-tools/find-a-dealer.html#/search',
+    getUrl: (site) => `${site.baseUrl}/shopping-tools/find-a-dealer.html#/search`,
   },
 
   skidoo: {
-    path: '/shopping-tools/find-a-dealer.html#/search',
+    getUrl: (site) => `${site.baseUrl}/shopping-tools/find-a-dealer.html#/search`,
   },
 
   lynx: {
-    path: '/shopping-tools/find-a-dealer.html#/search',
+    getUrl: (site) => `${site.baseUrl}/shopping-tools/find-a-dealer.html#/search`,
   },
 
   'canam-offroad': {
-    path: '/dealer-near-me.html#/search',
+    getUrl: (site) => {
+      const origin = new URL(site.baseUrl).origin;
+
+      return `${origin}/${site.country}/${site.language}/dealer-near-me.html`;
+    },
   },
 
   'canam-onroad': {
-    path: '/dealer-near-me.html#/search',
+    getUrl: (site) => {
+      const origin = new URL(site.baseUrl).origin;
+
+      return `${origin}/${site.country}/${site.language}/dealer-near-me.html`;
+    },
   },
 };
 
-export function getDealerLocatorConfig(
-  brand: BrandId,
-): DealerLocatorConfig {
+export function getDealerLocatorConfig(brand: BrandId): DealerLocatorConfig {
   const config = dealerLocatorConfig[brand];
 
   if (!config) {
-    throw new Error(
-      `Dealer Locator is not configured for brand: ${brand}`,
-    );
+    throw new Error(`Dealer Locator is not configured for brand: ${brand}`);
   }
 
   return config;
