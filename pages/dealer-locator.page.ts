@@ -1,5 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
-
+import { getDealerLocatorConfig } from '../config/dealer-locator.js';
 import type { SiteContext } from '../types/site.types.js';
 import { BasePage } from './base.page.js';
 
@@ -37,9 +37,11 @@ export class DealerLocatorPage extends BasePage {
             longitude: -73.5673,
         });
 
-        await super.goto(
-            '/shopping-tools/find-a-dealer.html#/search',
+        const dealerConfig = getDealerLocatorConfig(
+            this.site.brand.id,
         );
+
+        await super.goto(dealerConfig.path);
 
         await this.handleDealerConsent();
 
@@ -90,7 +92,7 @@ export class DealerLocatorPage extends BasePage {
     private async handleDealerConsent(): Promise<void> {
         const acceptButton = this.dealerPage
             .getByRole('button', {
-                name: /accept all cookies|accepter les témoins/i,
+                name: /accept all cookies|accepter les témoins|aceitar cookies/i,
             })
             .first();
 
