@@ -7,6 +7,7 @@ export default tseslint.config(
       'node_modules/**',
       'playwright-report/**',
       'test-results/**',
+      'reports/**',
       '.npm-cache/**',
       'coverage/**',
       'outputs/**',
@@ -33,6 +34,7 @@ export default tseslint.config(
     languageOptions: {
       globals: {
         process: 'readonly',
+        console: 'readonly',
       },
     },
   },
