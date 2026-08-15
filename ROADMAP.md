@@ -180,21 +180,21 @@ The next architectural step is to introduce a reusable Link Validator so shared 
 
 ## 🗺️ Original Smoke Checklist Mapping
 
-| # | Smoke Scenario | Roadmap Placement | Status |
-|---:|---|---|---|
-| 1 | Cookie / Lead Generation popup | Phase 5 | 🟡 Handling implemented; explicit validation pending |
-| 2 | Current Year PDP → BYO | Phase 4 | ⚪ Pending |
-| 3 | Previous Year PDP → RAQ | Phase 2 | ⚪ Pending |
-| 4 | Promotion Page / Offer Details | Phase 4 | ⚪ Pending |
-| 5 | Find a Dealer | Implemented | ✅ Done |
-| 6 | Carousel / Feature Tab | Phase 3 | ⚪ Pending |
-| 7 | Step-by-Step | Phase 3 | ⚪ Pending |
-| 8 | Accessories, Parts & Clothing → E-commerce | Phase 2 | ⚪ Pending |
-| 9 | Discover Brand | Phase 1 | ⚪ Pending |
-| 10 | Main Navigation links | Phase 1 | 🟡 Partial — structure + single internal navigation |
-| 11 | Footer links | Phase 1 | ✅ Done |
-| 12 | Page Level Navigation CTAs | Phase 2 | ⚪ Pending |
-| 13 | Chatbot | Phase 5 | ⚪ Pending |
+|   # | Smoke Scenario                             | Roadmap Placement | Status                                               |
+| --: | ------------------------------------------ | ----------------- | ---------------------------------------------------- |
+|   1 | Cookie / Lead Generation popup             | Phase 5           | 🟡 Handling implemented; explicit validation pending |
+|   2 | Current Year PDP → BYO                     | Phase 4           | ⚪ Pending                                           |
+|   3 | Previous Year PDP → RAQ                    | Phase 2           | ⚪ Pending                                           |
+|   4 | Promotion Page / Offer Details             | Phase 4           | ⚪ Pending                                           |
+|   5 | Find a Dealer                              | Implemented       | ✅ Done                                              |
+|   6 | Carousel / Feature Tab                     | Phase 3           | ⚪ Pending                                           |
+|   7 | Step-by-Step                               | Phase 3           | ⚪ Pending                                           |
+|   8 | Accessories, Parts & Clothing → E-commerce | Phase 2           | ⚪ Pending                                           |
+|   9 | Discover Brand                             | Phase 1           | ⚪ Pending                                           |
+|  10 | Main Navigation links                      | Phase 1           | 🟡 Partial — structure + single internal navigation  |
+|  11 | Footer links                               | Phase 1           | ✅ Done                                              |
+|  12 | Page Level Navigation CTAs                 | Phase 2           | ⚪ Pending                                           |
+|  13 | Chatbot                                    | Phase 5           | ⚪ Pending                                           |
 
 ### Status Legend
 
