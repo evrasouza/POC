@@ -1,3 +1,4 @@
+// pages/home.page.ts
 import type { Page } from '@playwright/test';
 
 import { CookieBannerComponent } from '../components/cookie-banner.component.js';
@@ -23,7 +24,44 @@ export class HomePage extends BasePage {
   }
 
   async prepareForInteraction(): Promise<void> {
-    await this.cookieBanner.dismissIfVisible();
-    await this.promotionalModal.dismissIfVisible();
+    const timeout = 8_000;
+    const pollInterval = 250;
+    const stablePeriod = 1_000;
+
+    const startTime = Date.now();
+    let stableSince: number | null = null;
+
+    while (Date.now() - startTime < timeout) {
+      const cookieVisible = await this.cookieBanner.isVisible();
+      const promotionalModalVisible = await this.promotionalModal.isVisible();
+
+      if (cookieVisible) {
+        await this.cookieBanner.dismissIfVisible();
+        stableSince = null;
+
+        await this.page.waitForTimeout(pollInterval);
+        continue;
+      }
+
+      if (promotionalModalVisible) {
+        await this.promotionalModal.dismissIfVisible();
+        stableSince = null;
+
+        await this.page.waitForTimeout(pollInterval);
+        continue;
+      }
+
+      if (stableSince === null) {
+        stableSince = Date.now();
+      }
+
+      if (Date.now() - stableSince >= stablePeriod) {
+        return;
+      }
+
+      await this.page.waitForTimeout(pollInterval);
+    }
+
+    throw new Error('Page did not become stable because a blocking overlay remained visible.');
   }
 }

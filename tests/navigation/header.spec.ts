@@ -1,3 +1,4 @@
+// tests/navigation/header.spec.ts
 import { test, expect } from '../../fixtures/test.fixture.js';
 
 test.describe('Global Header', () => {

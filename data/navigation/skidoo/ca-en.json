@@ -1,0 +1,43 @@
+{
+  "brand": "skidoo",
+  "locale": "ca-en",
+  "baseUrl": "https://ski-doo.brp.com/ca/en/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/ca/en/"
+    },
+    {
+      "text": "MODELS",
+      "href": "/ca/en/models.html"
+    },
+    {
+      "text": "BUILD & PRICE",
+      "href": "/ca/en/shopping-tools/customize-your-own.html"
+    },
+    {
+      "text": "ACCESSORIES, PARTS & CLOTHING",
+      "href": "https://ski-doo-shop.brp.com/ca/en/"
+    },
+    {
+      "text": "DISCOVER SKI-DOO",
+      "href": "/ca/en/discover.html"
+    },
+    {
+      "text": "OWNERS",
+      "href": "/ca/en/owners.html"
+    },
+    {
+      "text": "FIND A DEALER",
+      "href": "/ca/en/shopping-tools/find-a-dealer.html"
+    },
+    {
+      "text": "MORE",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "CA-EN",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}

@@ -1,26 +1,38 @@
+// components/promotional-modal.component.ts
 import type { Locator, Page } from '@playwright/test';
 
 export class PromotionalModalComponent {
-  readonly dialog: Locator;
+  readonly root: Locator;
+  readonly closeButton: Locator;
 
   constructor(private readonly page: Page) {
-    this.dialog = page
-      .getByRole('dialog')
-      .filter({
-        hasText: /GET \$20 OFF YOUR NEXT ORDER/i,
-      })
-      .first();
+    this.root = page.locator('#root_newsletter-popup');
+
+    this.closeButton = this.root.locator('button').last();
   }
 
-  async dismissIfVisible(): Promise<void> {
-    if (!(await this.dialog.isVisible())) {
-      return;
+  async isVisible(): Promise<boolean> {
+    return this.root.isVisible().catch(() => false);
+  }
+
+  async dismissIfVisible(): Promise<boolean> {
+    if (!(await this.isVisible())) {
+      return false;
     }
 
-    const closeButton = this.dialog.locator('button').last();
-
-    if (await closeButton.isVisible()) {
-      await closeButton.click();
+    if (!(await this.closeButton.isVisible().catch(() => false))) {
+      return false;
     }
+
+    await this.closeButton.click();
+
+    await this.root
+      .waitFor({
+        state: 'hidden',
+        timeout: 5_000,
+      })
+      .catch(() => {});
+
+    return true;
   }
 }

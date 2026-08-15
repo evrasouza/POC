@@ -1,0 +1,43 @@
+{
+  "brand": "lynx",
+  "locale": "us-en",
+  "baseUrl": "https://www.brplynx.com/us/en/",
+  "navigationItems": [
+    {
+      "text": "",
+      "href": "/us/en/"
+    },
+    {
+      "text": "MODELS",
+      "href": "/us/en/models.html"
+    },
+    {
+      "text": "ACCESSORIES & APPAREL",
+      "href": "/us/en/accessories-apparel.html"
+    },
+    {
+      "text": "CUSTOMIZE YOUR OWN",
+      "href": "/us/en/shopping-tools/customize-your-own.html"
+    },
+    {
+      "text": "DISCOVER LYNX",
+      "href": "/us/en/discover.html"
+    },
+    {
+      "text": "FIND A DEALER",
+      "href": "/us/en/shopping-tools/find-a-dealer.html"
+    },
+    {
+      "text": "OWNERS",
+      "href": "/us/en/owners.html"
+    },
+    {
+      "text": "MORE",
+      "href": "javascript:void(0)"
+    },
+    {
+      "text": "US-EN",
+      "href": "/choose-country-region.html"
+    }
+  ]
+}
