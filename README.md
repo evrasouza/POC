@@ -179,19 +179,19 @@ A navigation data file has the following structure:
 
 ```json
 {
-  "brand": "canam-offroad",
-  "locale": "fi-fi",
-  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
-  "navigationItems": [
-    {
-      "text": "SSV",
-      "href": "/off-road/fi/fi/mallit/ssv.html"
-    },
-    {
-      "text": "ATV",
-      "href": "/off-road/fi/fi/mallit/atv.html"
-    }
-  ]
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    }
+  ]
 }
 ```
 
@@ -262,10 +262,10 @@ Example:
 
 ```ts
 buildUrl({
-  brand: 'canam-offroad',
-  country: 'ca',
-  language: 'en',
-  path: '/',
+  brand: 'canam-offroad',
+  country: 'ca',
+  language: 'en',
+  path: '/',
 });
 ```
 
@@ -279,10 +279,10 @@ Sea-Doo example:
 
 ```ts
 buildUrl({
-  brand: 'seadoo',
-  country: 'ca',
-  language: 'en',
-  path: '/',
+  brand: 'seadoo',
+  country: 'ca',
+  language: 'en',
+  path: '/',
 });
 ```
 
@@ -296,10 +296,10 @@ Internal paths are also generated dynamically:
 
 ```ts
 buildUrl({
-  brand: 'canam-offroad',
-  country: 'ca',
-  language: 'en',
-  path: '/models/sxs',
+  brand: 'canam-offroad',
+  country: 'ca',
+  language: 'en',
+  path: '/models/sxs',
 });
 ```
 
@@ -600,19 +600,19 @@ The generated JSON contains information such as:
 
 ```json
 {
-  "brand": "canam-offroad",
-  "locale": "fi-fi",
-  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
-  "navigationItems": [
-    {
-      "text": "SSV",
-      "href": "/off-road/fi/fi/mallit/ssv.html"
-    },
-    {
-      "text": "ATV",
-      "href": "/off-road/fi/fi/mallit/atv.html"
-    }
-  ]
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    }
+  ]
 }
 ```
 
@@ -858,9 +858,9 @@ Example:
 import { BasePage } from './base.page.js';
 
 export class ProductListingPage extends BasePage {
-  async gotoListing(): Promise<void> {
-    await this.goto('/vehicles');
-  }
+  async gotoListing(): Promise<void> {
+    await this.goto('/vehicles');
+  }
 }
 ```
 
@@ -874,7 +874,7 @@ Example:
 
 ```ts
 export class NavigationComponent {
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) {}
 }
 ```
 
@@ -900,9 +900,9 @@ Example:
 import { test, expect } from '../../fixtures/test.fixture.js';
 
 test('homepage loads', async ({ homePage }) => {
-  const response = await homePage.goto();
+  const response = await homePage.goto();
 
-  expect(response?.ok()).toBe(true);
+  expect(response?.ok()).toBe(true);
 });
 ```
 

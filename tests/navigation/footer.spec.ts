@@ -2,10 +2,7 @@
 import { test, expect } from '../../fixtures/test.fixture.js';
 
 test.describe('Global Footer', () => {
-  test('displays the shared global footer', async ({
-    homePage,
-    site,
-  }) => {
+  test('displays the shared global footer', async ({ homePage, site }) => {
     test.info().annotations.push({
       type: 'site',
       description: `${site.brand.displayName} ${site.locale}`,
@@ -17,10 +14,7 @@ test.describe('Global Footer', () => {
 
     const linkCount = await homePage.footer.linkCount();
 
-    expect(
-      linkCount,
-      'Expected the global footer to contain navigable links',
-    ).toBeGreaterThan(0);
+    expect(linkCount, 'Expected the global footer to contain navigable links').toBeGreaterThan(0);
   });
 
   test('resolves an internal footer link to a valid destination', async ({
@@ -34,8 +28,7 @@ test.describe('Global Footer', () => {
 
     await homePage.prepareForInteraction();
 
-    const link =
-      await homePage.footer.getFirstInternalNavigableLink();
+    const link = await homePage.footer.getFirstInternalNavigableLink();
 
     expect(
       link,
@@ -44,16 +37,11 @@ test.describe('Global Footer', () => {
 
     const href = await link!.getAttribute('href');
 
-    expect(
-      href,
-      'Expected the footer link to contain an href',
-    ).toBeTruthy();
+    expect(href, 'Expected the footer link to contain an href').toBeTruthy();
 
     const targetUrl = new URL(href!, page.url());
 
-    expect(targetUrl.hostname).toBe(
-      new URL(site.baseUrl).hostname,
-    );
+    expect(targetUrl.hostname).toBe(new URL(site.baseUrl).hostname);
 
     const response = await page.goto(targetUrl.href, {
       waitUntil: 'domcontentloaded',
@@ -69,8 +57,6 @@ test.describe('Global Footer', () => {
       `Expected ${targetUrl.href} to load successfully but received HTTP ${response!.status()}`,
     ).toBeTruthy();
 
-    expect(new URL(page.url()).hostname).toBe(
-      new URL(site.baseUrl).hostname,
-    );
+    expect(new URL(page.url()).hostname).toBe(new URL(site.baseUrl).hostname);
   });
 });

@@ -33,8 +33,7 @@ export class HomePage extends BasePage {
 
     while (Date.now() - startTime < timeout) {
       const cookieVisible = await this.cookieBanner.isVisible();
-      const promotionalModalVisible =
-        await this.promotionalModal.isVisible();
+      const promotionalModalVisible = await this.promotionalModal.isVisible();
 
       if (cookieVisible) {
         await this.cookieBanner.dismissIfVisible();
@@ -63,8 +62,6 @@ export class HomePage extends BasePage {
       await this.page.waitForTimeout(pollInterval);
     }
 
-    throw new Error(
-      'Page did not become stable because a blocking overlay remained visible.',
-    );
+    throw new Error('Page did not become stable because a blocking overlay remained visible.');
   }
 }

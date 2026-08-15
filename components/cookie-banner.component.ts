@@ -6,10 +6,7 @@ export class CookieBannerComponent {
   readonly acceptButton: Locator;
 
   constructor(private readonly page: Page) {
-    this.dialog = page
-      .locator('#axeptio_overlay')
-      .getByRole('dialog')
-      .first();
+    this.dialog = page.locator('#axeptio_overlay').getByRole('dialog').first();
 
     this.acceptButton = this.dialog.getByRole('button', {
       name: /^(accept all cookies|accept cookies|accepter les témoins|accepter tous les témoins|aceptar todas las cookies|aceptar cookies)$/i,

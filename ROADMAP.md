@@ -13,31 +13,31 @@ flows, and stateful or third-party integrations.
 
 The framework already includes coverage for:
 
--   Homepage smoke validation
--   Global Header
--   Global Footer
--   Product navigation
--   Find a Dealer
--   Navigation discovery
--   Axeptio Cookie Consent handling
--   Promotional / Lead Generation modal handling
--   Multi-brand and multi-locale execution
+- Homepage smoke validation
+- Global Header
+- Global Footer
+- Product navigation
+- Find a Dealer
+- Navigation discovery
+- Axeptio Cookie Consent handling
+- Promotional / Lead Generation modal handling
+- Multi-brand and multi-locale execution
 
 ## Phase 1 --- Navigation Foundation
 
 **Goal:** establish reusable navigation validation that can be shared
 across brands, locales, and AEM components.
 
--   [x] **Footer Navigation** --- validate footer visibility, discover
-    navigable internal links, and verify destinations.
--   [ ] **Reusable Link Validator** --- extract shared internal and
-    external link validation logic for reuse across navigation
-    components.
--   [ ] **Full Main Navigation Validation** --- evolve the current
-    header coverage from a single internal link to complete menu
-    validation.
--   [ ] **Discover Brand Navigation** --- validate that Discover Brand
-    entries navigate to valid brand pages.
+- [x] **Footer Navigation** --- validate footer visibility, discover
+      navigable internal links, and verify destinations.
+- [ ] **Reusable Link Validator** --- extract shared internal and
+      external link validation logic for reuse across navigation
+      components.
+- [ ] **Full Main Navigation Validation** --- evolve the current
+      header coverage from a single internal link to complete menu
+      validation.
+- [ ] **Discover Brand Navigation** --- validate that Discover Brand
+      entries navigate to valid brand pages.
 
 ### Completed --- Footer Navigation
 
@@ -45,16 +45,16 @@ Footer smoke coverage was introduced for the shared AEM footer.
 
 Current coverage validates that:
 
--   The global footer is rendered and visible.
--   The footer contains navigable links.
--   Internal navigable links are discovered dynamically from the content
-    rendered by AEM.
--   Non-navigation links such as anchors, `javascript:`, `mailto:`, and
-    `tel:` can be excluded from internal navigation discovery.
--   The selected internal destination belongs to the expected brand
-    hostname.
--   The destination can be loaded successfully.
--   The destination returns a successful HTTP response.
+- The global footer is rendered and visible.
+- The footer contains navigable links.
+- Internal navigable links are discovered dynamically from the content
+  rendered by AEM.
+- Non-navigation links such as anchors, `javascript:`, `mailto:`, and
+  `tel:` can be excluded from internal navigation discovery.
+- The selected internal destination belongs to the expected brand
+  hostname.
+- The destination can be loaded successfully.
+- The destination returns a successful HTTP response.
 
 For destination validation, the footer test resolves the selected
 internal link through its `href` and validates the resulting page
@@ -83,11 +83,11 @@ The framework now includes reusable handling for these conditions.
 
 The implementation:
 
--   Detects the active Axeptio consent dialog.
--   Uses semantic role-based selectors.
--   Accepts cookies when the dialog is displayed.
--   Waits for the active dialog to become hidden before continuing.
--   Keeps cookie handling outside individual feature tests.
+- Detects the active Axeptio consent dialog.
+- Uses semantic role-based selectors.
+- Accepts cookies when the dialog is displayed.
+- Waits for the active dialog to become hidden before continuing.
+- Keeps cookie handling outside individual feature tests.
 
 #### Promotional / Lead Generation Modal
 
@@ -96,10 +96,10 @@ lead-generation modal.
 
 The implementation:
 
--   Detects the shared `#root_newsletter-popup` container.
--   Closes the modal when it becomes visible.
--   Waits until the modal is hidden before continuing.
--   Keeps promotional modal handling outside individual feature tests.
+- Detects the shared `#root_newsletter-popup` container.
+- Closes the modal when it becomes visible.
+- Waits until the modal is hidden before continuing.
+- Keeps promotional modal handling outside individual feature tests.
 
 #### Page Interaction Stability
 
@@ -119,7 +119,7 @@ independently from feature tests.
 
 This separation is intentional:
 
-``` text
+```text
 Global overlay behavior
         ↓
 Reusable overlay components
@@ -135,7 +135,7 @@ appeared asynchronously.
 
 ### Current Phase 1 Architecture
 
-``` text
+```text
 components/
   cookie-banner.component.ts
   footer.component.ts
@@ -163,34 +163,34 @@ navigation-oriented smoke tests.
 **Goal:** cover deterministic redirects and CTA behavior with limited
 external state.
 
--   [ ] **Accessories, Parts & Clothing → E-commerce** --- validate
-    e-commerce redirection, including Can-Am Off-Road / On-Road
-    selection behavior.
--   [ ] **Page Level Navigation CTAs** --- validate CTA destinations
-    from the Page Level Navigation component.
--   [ ] **Previous Model Year → RAQ** --- validate that RAQ from a
-    previous-year PDP reaches the Request a Quote form.
+- [ ] **Accessories, Parts & Clothing → E-commerce** --- validate
+      e-commerce redirection, including Can-Am Off-Road / On-Road
+      selection behavior.
+- [ ] **Page Level Navigation CTAs** --- validate CTA destinations
+      from the Page Level Navigation component.
+- [ ] **Previous Model Year → RAQ** --- validate that RAQ from a
+      previous-year PDP reaches the Request a Quote form.
 
 ## Phase 3 --- PDP Component Validation
 
 **Goal:** validate interactive AEM components on Product Detail Pages.
 
--   [ ] **Carousel / Feature Tab** --- validate visibility, controls,
-    and expected slide/tab behavior.
--   [ ] **Step-by-Step** --- validate the Sea-Doo / Pontoons
-    Step-by-Step component and user progression.
+- [ ] **Carousel / Feature Tab** --- validate visibility, controls,
+      and expected slide/tab behavior.
+- [ ] **Step-by-Step** --- validate the Sea-Doo / Pontoons
+      Step-by-Step component and user progression.
 
 ## Phase 4 --- Business Flows
 
 **Goal:** introduce higher-value flows that depend on product
 configuration, model year, offers, or multiple systems.
 
--   [ ] **Current Model Year → BYO** --- navigate from a model-level BYO
-    CTA and validate the Build Your Own flow.
--   [ ] **Promotion Page** --- select a region and verify that eligible
-    offers are displayed.
--   [ ] **Offer Details Disclaimer** --- open Offer Details and verify
-    that the expected disclaimer is displayed.
+- [ ] **Current Model Year → BYO** --- navigate from a model-level BYO
+      CTA and validate the Build Your Own flow.
+- [ ] **Promotion Page** --- select a region and verify that eligible
+      offers are displayed.
+- [ ] **Offer Details Disclaimer** --- open Offer Details and verify
+      that the expected disclaimer is displayed.
 
 ## Phase 5 --- Dynamic Integrations and Stateful UI
 
@@ -198,13 +198,13 @@ configuration, model year, offers, or multiple systems.
 cookies, previous sessions, regional rules, timing, or third-party
 integrations.
 
--   [ ] **Cookie Consent Smoke Validation** --- explicitly validate
-    first-visit consent behavior using controlled browser state.
--   [ ] **Lead Generation Popup Smoke Validation** --- explicitly
-    validate when the lead-generation modal should appear and its
-    expected behavior.
--   [ ] **Chatbot** --- validate chatbot availability and its initial
-    introduction behavior.
+- [ ] **Cookie Consent Smoke Validation** --- explicitly validate
+      first-visit consent behavior using controlled browser state.
+- [ ] **Lead Generation Popup Smoke Validation** --- explicitly
+      validate when the lead-generation modal should appear and its
+      expected behavior.
+- [ ] **Chatbot** --- validate chatbot availability and its initial
+      introduction behavior.
 
 > Cookie Consent and Lead Generation **handling infrastructure is
 > already implemented** to support other tests. The Phase 5 items remain
@@ -213,50 +213,53 @@ integrations.
 
 ## Original Smoke Checklist Mapping
 
-  -----------------------------------------------------------------------
-  \#                Smoke scenario    Roadmap placement Status
-  ----------------- ----------------- ----------------- -----------------
-  1                 Cookie / Lead     Phase 5           Handling
-                    Generation popup                    infrastructure
-                                                        implemented;
-                                                        explicit smoke
-                                                        validation
-                                                        pending
+---
 
-  2                 Current Year PDP  Phase 4           Pending
-                    → BYO                               
+\# Smoke scenario Roadmap placement Status
 
-  3                 Previous Year PDP Phase 2           Pending
-                    → RAQ                               
+---
 
-  4                 Promotion Page /  Phase 4           Pending
-                    Offer Details                       
+1 Cookie / Lead Phase 5 Handling
+Generation popup infrastructure
+implemented;
+explicit smoke
+validation
+pending
 
-  5                 Find a Dealer     Implemented       Done
+2 Current Year PDP Phase 4 Pending
+→ BYO
 
-  6                 Carousel /        Phase 3           Pending
-                    Feature Tab                         
+3 Previous Year PDP Phase 2 Pending
+→ RAQ
 
-  7                 Step-by-Step      Phase 3           Pending
+4 Promotion Page / Phase 4 Pending
+Offer Details
 
-  8                 Accessories,      Phase 2           Pending
-                    Parts & Clothing                    
-                    → E-commerce                        
+5 Find a Dealer Implemented Done
 
-  9                 Discover Brand    Phase 1           Pending
+6 Carousel / Phase 3 Pending
+Feature Tab
 
-  10                Main Navigation   Phase 1           Partial ---
-                    links                               shared header
-                                                        navigation
-                                                        implemented
+7 Step-by-Step Phase 3 Pending
 
-  11                Footer links      Phase 1           Done
+8 Accessories, Phase 2 Pending
+Parts & Clothing  
+→ E-commerce
 
-  12                Page Level        Phase 2           Pending
-                    Navigation CTAs                     
+9 Discover Brand Phase 1 Pending
 
-  13                Chatbot           Phase 5           Pending
-  -----------------------------------------------------------------------
+10 Main Navigation Phase 1 Partial ---
+links shared header
+navigation
+implemented
+
+11 Footer links Phase 1 Done
+
+12 Page Level Phase 2 Pending
+Navigation CTAs
+
+13 Chatbot Phase 5 Pending
+-----------------------------------------------------------------------
 
 ## AEM Automation Principles
 
@@ -315,27 +318,27 @@ load independently from global overlay timing.
 
 A roadmap feature is considered complete when:
 
--   [ ] The test is repeatable and does not depend on uncontrolled
-    previous browser state.
--   [ ] Selectors follow the Page Object / Component Object
-    architecture.
--   [ ] Brand- and locale-specific values are configuration-driven
-    whenever possible.
--   [ ] Failures identify the affected brand, locale, component, or URL
-    with useful context.
--   [ ] The feature runs successfully in the existing Playwright
-    structure.
--   [ ] The implementation avoids unnecessary hard-coded AEM authored
-    content.
--   [ ] Global overlays are handled through shared infrastructure rather
-    than feature-specific workarounds.
--   [ ] Regression tests remain green after the feature is introduced.
--   [ ] Documentation is updated when new configuration or execution
-    behavior is introduced.
+- [ ] The test is repeatable and does not depend on uncontrolled
+      previous browser state.
+- [ ] Selectors follow the Page Object / Component Object
+      architecture.
+- [ ] Brand- and locale-specific values are configuration-driven
+      whenever possible.
+- [ ] Failures identify the affected brand, locale, component, or URL
+      with useful context.
+- [ ] The feature runs successfully in the existing Playwright
+      structure.
+- [ ] The implementation avoids unnecessary hard-coded AEM authored
+      content.
+- [ ] Global overlays are handled through shared infrastructure rather
+      than feature-specific workarounds.
+- [ ] Regression tests remain green after the feature is introduced.
+- [ ] Documentation is updated when new configuration or execution
+      behavior is introduced.
 
 ## Recommended Execution Order
 
-``` text
+```text
 Phase 1 — Navigation Foundation
         ↓
 Reusable Link Validator
@@ -355,7 +358,7 @@ Phase 5 — Dynamic Integrations
 
 ## Current Status
 
-``` text
+```text
 Implemented
 ├── Homepage Smoke
 ├── Global Header
