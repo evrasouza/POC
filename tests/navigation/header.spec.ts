@@ -1,7 +1,11 @@
+// tests/navigation/header.spec.ts
 import { test, expect } from '../../fixtures/test.fixture.js';
 
 test.describe('Global Header', () => {
-  test('displays the shared global navigation', async ({ homePage, site }) => {
+  test('displays the shared global navigation', async ({
+    homePage,
+    site,
+  }) => {
     test.info().annotations.push({
       type: 'site',
       description: `${site.brand.displayName} ${site.locale}`,
@@ -14,10 +18,17 @@ test.describe('Global Header', () => {
 
     const linkCount = await homePage.header.linkCount();
 
-    expect(linkCount, 'Expected the global header to contain navigable links').toBeGreaterThan(0);
+    expect(
+      linkCount,
+      'Expected the global header to contain navigable links',
+    ).toBeGreaterThan(0);
   });
 
-  test('navigates through an internal header link', async ({ homePage, page, site }) => {
+  test('navigates through an internal header link', async ({
+    homePage,
+    page,
+    site,
+  }) => {
     await homePage.goto();
 
     await homePage.prepareForInteraction();
@@ -35,6 +46,8 @@ test.describe('Global Header', () => {
 
     await expect(page).not.toHaveURL(initialUrl);
 
-    expect(new URL(page.url()).hostname).toBe(new URL(site.baseUrl).hostname);
+    expect(new URL(page.url()).hostname).toBe(
+      new URL(site.baseUrl).hostname,
+    );
   });
 });

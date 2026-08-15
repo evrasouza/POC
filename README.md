@@ -14,6 +14,10 @@ The goal is to reuse the same test scenarios across brands and locales whenever 
 
 The framework is designed to grow into coverage for navigation, product discovery, forms, lead generation, dealer flows, localization, analytics, APIs, and other public website functionality.
 
+## Project Roadmap
+
+The planned evolution of the automation framework, current priorities, and upcoming smoke-test coverage are documented in the [Automation Roadmap](./ROADMAP.md).
+
 ## Installation
 
 ```bash
@@ -25,67 +29,68 @@ npx playwright install
 
 ```text
 .github/
-  workflows/
-    playwright.yml
+  workflows/
+    playwright.yml
 
 config/
-  brands.ts
-  environment.ts
+  brands.ts
+  environment.ts
 
 fixtures/
-  test.fixture.ts
+  test.fixture.ts
 
 pages/
-  base.page.ts
-  home.page.ts
+  base.page.ts
+  home.page.ts
 
 components/
-  cookie-banner.component.ts
-  footer.component.ts
-  header.component.ts
-  promotional-modal.component.ts
+  cookie-banner.component.ts
+  footer.component.ts
+  header.component.ts
+  promotional-modal.component.ts
 
 utils/
-  navigation-data.ts
-  url-builder.ts
+  navigation-data.ts
+  url-builder.ts
 
 data/
-  navigation/
-    canam-offroad/
-      ca-en.json
-      fi-fi.json
-    canam-onroad/
-      ca-en.json
-      fi-en.json
-    seadoo/
-      ca-en.json
-      fi-fi.json
-    skidoo/
-      ca-en.json
-    lynx/
-      ca-en.json
+  navigation/
+    canam-offroad/
+      ca-en.json
+      fi-fi.json
+    canam-onroad/
+      ca-en.json
+      fi-en.json
+    seadoo/
+      ca-en.json
+      fi-fi.json
+    skidoo/
+      ca-en.json
+    lynx/
+      ca-en.json
 
 tests/
-  discovery/
-    header-navigation.discovery.spec.ts
-  navigation/
-    header.spec.ts
-  products/
-    product-navigation.spec.ts
-  smoke/
-    homepage.spec.ts
-  unit/
-    url-builder.spec.ts
+  discovery/
+    header-navigation.discovery.spec.ts
+  navigation/
+    header.spec.ts
+  products/
+    product-navigation.spec.ts
+  smoke/
+    homepage.spec.ts
+  unit/
+    url-builder.spec.ts
 
 types/
-  site.types.ts
+  site.types.ts
 
 scripts/
-  run-playwright.mjs
+  run-playwright.mjs
 
 playwright.config.ts
 package.json
 README.md
+ROADMAP.md
 .env.example
 .gitignore
 eslint.config.mjs
@@ -99,17 +104,17 @@ Tests describe behavior while configuration determines which website and locale 
 
 ```text
 Test
-  ↓
+  ↓
 Page Object
-  ↓
+  ↓
 Reusable Components
-  ↓
+  ↓
 Site Context
-  ↓
+  ↓
 Brand + Locale Configuration
-  ↓
+  ↓
 URL Builder
-  ↓
+  ↓
 BRP Website
 ```
 
@@ -125,10 +130,10 @@ Example:
 
 ```ts
 {
-  id: 'canam-offroad',
-  displayName: 'Can-Am Off-Road',
-  origin: 'https://can-am.brp.com',
-  productLinePath: 'off-road',
+  id: 'canam-offroad',
+  displayName: 'Can-Am Off-Road',
+  origin: 'https://can-am.brp.com',
+  productLinePath: 'off-road',
 }
 ```
 
@@ -174,19 +179,19 @@ A navigation data file has the following structure:
 
 ```json
 {
-  "brand": "canam-offroad",
-  "locale": "fi-fi",
-  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
-  "navigationItems": [
-    {
-      "text": "SSV",
-      "href": "/off-road/fi/fi/mallit/ssv.html"
-    },
-    {
-      "text": "ATV",
-      "href": "/off-road/fi/fi/mallit/atv.html"
-    }
-  ]
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    }
+  ]
 }
 ```
 
@@ -218,9 +223,9 @@ Configuration priority is:
 
 ```text
 Command-line parameters
-        ↓
+        ↓
 Environment variables
-        ↓
+        ↓
 Default values
 ```
 
@@ -257,10 +262,10 @@ Example:
 
 ```ts
 buildUrl({
-  brand: 'canam-offroad',
-  country: 'ca',
-  language: 'en',
-  path: '/',
+  brand: 'canam-offroad',
+  country: 'ca',
+  language: 'en',
+  path: '/',
 });
 ```
 
@@ -274,10 +279,10 @@ Sea-Doo example:
 
 ```ts
 buildUrl({
-  brand: 'seadoo',
-  country: 'ca',
-  language: 'en',
-  path: '/',
+  brand: 'seadoo',
+  country: 'ca',
+  language: 'en',
+  path: '/',
 });
 ```
 
@@ -291,10 +296,10 @@ Internal paths are also generated dynamically:
 
 ```ts
 buildUrl({
-  brand: 'canam-offroad',
-  country: 'ca',
-  language: 'en',
-  path: '/models/sxs',
+  brand: 'canam-offroad',
+  country: 'ca',
+  language: 'en',
+  path: '/models/sxs',
 });
 ```
 
@@ -481,17 +486,17 @@ The CI pipeline validates:
 
 ```text
 Quality Checks
-  ├── Prettier
-  ├── ESLint
-  ├── TypeScript
-  └── Unit Tests
-        ↓
+  ├── Prettier
+  ├── ESLint
+  ├── TypeScript
+  └── Unit Tests
+        ↓
 Playwright Smoke
-  ├── Can-Am Off-Road
-  ├── Can-Am On-Road
-  ├── Sea-Doo
-  ├── Ski-Doo
-  └── Lynx
+  ├── Can-Am Off-Road
+  ├── Can-Am On-Road
+  ├── Sea-Doo
+  ├── Ski-Doo
+  └── Lynx
 ```
 
 Playwright reports and failure artifacts are uploaded by GitHub Actions when applicable.
@@ -542,55 +547,24 @@ Current coverage verifies that:
 
 The same tests are reused across supported BRP brands.
 
-## Navigation Discovery
+## Shared Footer Navigation Tests
 
-`tests/discovery/header-navigation.discovery.spec.ts` is a discovery utility used to inspect the real navigation rendered by a specific brand and locale.
+`tests/navigation/footer.spec.ts` validates shared global footer behavior.
 
-It collects visible navigation links and exports them as JSON.
+Current coverage verifies that:
 
-Example:
+1. The global footer is visible.
+2. The footer contains navigable links.
+3. An internal navigation link can be discovered dynamically.
+4. The link contains a valid destination.
+5. The destination belongs to the expected website hostname.
+6. The destination loads successfully.
 
-```bash
-npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=canam-offroad --country=fi --language=fi
-```
+Footer links are discovered from the content rendered by AEM instead of being hardcoded by label.
 
-Another example:
+For destination validation, the test resolves the selected internal link through its `href` and validates the resulting page response. This keeps footer navigation validation independent from global overlays that may appear asynchronously while scrolling the page.
 
-```bash
-npm test -- tests/discovery/header-navigation.discovery.spec.ts --brand=seadoo --country=ca --language=fr
-```
-
-Generated discovery files are written to:
-
-```text
-test-results/navigation-discovery/
-```
-
-For example:
-
-```text
-test-results/navigation-discovery/canam-offroad-fi-fi.json
-```
-
-The generated JSON contains information such as:
-
-```json
-{
-  "brand": "canam-offroad",
-  "locale": "fi-fi",
-  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
-  "navigationItems": [
-    {
-      "text": "SSV",
-      "href": "/off-road/fi/fi/mallit/ssv.html"
-    },
-    {
-      "text": "ATV",
-      "href": "/off-road/fi/fi/mallit/atv.html"
-    }
-  ]
-}
-```
+The same tests are reused across supported BRP brands and locales.
 
 ## Navigation Discovery
 
@@ -626,19 +600,19 @@ The generated JSON contains information such as:
 
 ```json
 {
-  "brand": "canam-offroad",
-  "locale": "fi-fi",
-  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
-  "navigationItems": [
-    {
-      "text": "SSV",
-      "href": "/off-road/fi/fi/mallit/ssv.html"
-    },
-    {
-      "text": "ATV",
-      "href": "/off-road/fi/fi/mallit/atv.html"
-    }
-  ]
+  "brand": "canam-offroad",
+  "locale": "fi-fi",
+  "baseUrl": "https://can-am.brp.com/off-road/fi/fi/",
+  "navigationItems": [
+    {
+      "text": "SSV",
+      "href": "/off-road/fi/fi/mallit/ssv.html"
+    },
+    {
+      "text": "ATV",
+      "href": "/off-road/fi/fi/mallit/atv.html"
+    }
+  ]
 }
 ```
 
@@ -652,15 +626,15 @@ The intended workflow is:
 
 ```text
 BRP Website
-    ↓
+    ↓
 Navigation Discovery
-    ↓
+    ↓
 test-results/navigation-discovery/*.json
-    ↓
+    ↓
 QA Review
-    ↓
+    ↓
 data/navigation/{brand}/{locale}.json
-    ↓
+    ↓
 Regression Test
 ```
 
@@ -673,7 +647,7 @@ Discovery:
 
 test-results/navigation-discovery/canam-offroad-fi-fi.json
 
-        ↓ QA review
+        ↓ QA review
 
 Regression data:
 
@@ -742,15 +716,15 @@ The intended workflow is:
 
 ```text
 BRP Website
-    ↓
+    ↓
 Navigation Discovery
-    ↓
+    ↓
 test-results/navigation-discovery/*.json
-    ↓
+    ↓
 QA Review
-    ↓
+    ↓
 data/navigation/{brand}/{locale}.json
-    ↓
+    ↓
 Regression Test
 ```
 
@@ -763,7 +737,7 @@ Discovery:
 
 test-results/navigation-discovery/canam-offroad-fi-fi.json
 
-        ↓ QA review
+        ↓ QA review
 
 Regression data:
 
@@ -776,16 +750,24 @@ This prevents an incorrect website change from being automatically accepted as t
 
 Public BRP websites may display cookie consent widgets or promotional modals that prevent normal page interaction.
 
-Reusable components handle these conditions before functional interactions:
+Reusable components handle these conditions:
 
 ```text
 CookieBannerComponent
 PromotionalModalComponent
 ```
 
-`HomePage.prepareForInteraction()` prepares the page before navigation scenarios by dismissing supported overlays when they are present.
+`CookieBannerComponent` handles the Axeptio cookie consent dialog when it is displayed.
 
-This behavior remains separate from `goto()` so cookie and promotional-modal behavior can still be tested independently in future scenarios.
+`PromotionalModalComponent` handles the shared newsletter / lead-generation promotional modal when it is displayed.
+
+`HomePage.prepareForInteraction()` centralizes this behavior before functional interactions. It waits for supported blocking overlays to be dismissed and for the page to remain stable before allowing the test flow to continue.
+
+This is particularly important because some overlays may appear asynchronously after page load or after interactions such as scrolling.
+
+Overlay handling remains separate from `goto()` so cookie consent and promotional-modal behavior can still be tested independently.
+
+Feature tests should use the shared page preparation behavior instead of implementing brand-specific popup handling directly inside individual test specifications.
 
 ## Reusable Components
 
@@ -804,9 +786,9 @@ The `HeaderComponent`, for example, separates the complete header from the main 
 
 ```text
 Header
-  ├── Header content
-  └── Main Navigation
-        └── Navigation Links
+  ├── Header content
+  └── Main Navigation
+        └── Navigation Links
 ```
 
 Tests interact with the component instead of duplicating DOM locators inside specs.
@@ -817,10 +799,10 @@ Add a new entry to `config/brands.ts`:
 
 ```ts
 'example-brand': {
-  id: 'example-brand',
-  displayName: 'Example Brand',
-  origin: 'https://example.brp.com',
-  productLinePath: 'optional-product-line',
+  id: 'example-brand',
+  displayName: 'Example Brand',
+  origin: 'https://example.brp.com',
+  productLinePath: 'optional-product-line',
 }
 ```
 
@@ -876,9 +858,9 @@ Example:
 import { BasePage } from './base.page.js';
 
 export class ProductListingPage extends BasePage {
-  async gotoListing(): Promise<void> {
-    await this.goto('/vehicles');
-  }
+  async gotoListing(): Promise<void> {
+    await this.goto('/vehicles');
+  }
 }
 ```
 
@@ -892,7 +874,7 @@ Example:
 
 ```ts
 export class NavigationComponent {
-  constructor(private readonly page: Page) {}
+  constructor(private readonly page: Page) {}
 }
 ```
 
@@ -918,9 +900,9 @@ Example:
 import { test, expect } from '../../fixtures/test.fixture.js';
 
 test('homepage loads', async ({ homePage }) => {
-  const response = await homePage.goto();
+  const response = await homePage.goto();
 
-  expect(response?.ok()).toBe(true);
+  expect(response?.ok()).toBe(true);
 });
 ```
 
@@ -928,7 +910,7 @@ Avoid duplicating tests by brand or locale unless the actual user experience req
 
 ## Current Test Coverage
 
-The framework currently provides five layers of coverage:
+The framework currently provides the following coverage:
 
 ```text
 Unit
@@ -938,13 +920,22 @@ Smoke
   └── Homepage availability and basic rendering
 
 Navigation
-  └── Shared header and internal navigation behavior
+  ├── Shared Header
+  ├── Shared Footer
+  └── Internal navigation behavior
 
 Discovery
   └── Navigation extraction by brand and locale
 
 Products
   └── Navigation validation using reviewed brand/locale datasets
+
+Dealers
+  └── Find a Dealer search and result validation
+
+Global UI Handling
+  ├── Axeptio Cookie Consent
+  └── Promotional / Lead Generation modal
 ```
 
 The current architecture establishes the foundation for future end-to-end business coverage:
@@ -958,12 +949,10 @@ Product Discovery
     ↓
 Product Detail
     ↓
-Lead Form
-    ↓
-Dealer Selection
-    ↓
-Lead Submission
+Business Flows
 ```
+
+Future coverage is tracked in the [Automation Roadmap](./ROADMAP.md).
 
 ## Navigation Dataset Maintenance Workflow
 
