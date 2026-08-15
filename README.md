@@ -29,63 +29,68 @@ npx playwright install
 
 ```text
 .github/
-  workflows/
-    playwright.yml
+  workflows/
+    playwright.yml
 
 config/
-  brands.ts
-  environment.ts
+  brands.ts
+  environment.ts
 
 fixtures/
-  test.fixture.ts
+  test.fixture.ts
 
 pages/
-  base.page.ts
-  home.page.ts
+  base.page.ts
+  home.page.ts
 
 components/
-  cookie-banner.component.ts
-  footer.component.ts
-  header.component.ts
-  promotional-modal.component.ts
+  cookie-banner.component.ts
+  footer.component.ts
+  header.component.ts
+  promotional-modal.component.ts
 
 utils/
-  navigation-data.ts
-  url-builder.ts
+  link-validator.ts
+  navigation-data.ts
+  url-builder.ts
 
 data/
-  navigation/
-    canam-offroad/
-      ca-en.json
-      fi-fi.json
-    canam-onroad/
-      ca-en.json
-      fi-en.json
-    seadoo/
-      ca-en.json
-      fi-fi.json
-    skidoo/
-      ca-en.json
-    lynx/
-      ca-en.json
+  navigation/
+    canam-offroad/
+      ca-en.json
+      fi-fi.json
+    canam-onroad/
+      ca-en.json
+      fi-en.json
+    seadoo/
+      ca-en.json
+      fi-fi.json
+    skidoo/
+      ca-en.json
+    lynx/
+      ca-en.json
 
 tests/
-  discovery/
-    header-navigation.discovery.spec.ts
-  navigation/
-    header.spec.ts
-  products/
-    product-navigation.spec.ts
-  smoke/
-    homepage.spec.ts
-  unit/
-    url-builder.spec.ts
+  debug/
+    overlays.spec.ts
+  discovery/
+    header-navigation.discovery.spec.ts
+  navigation/
+    footer.spec.ts
+    header.spec.ts
+  products/
+    product-navigation.spec.ts
+  smoke/
+    homepage.spec.ts
+  unit/
+    link-validator.spec.ts
+    url-builder.spec.ts
 
 types/
-  site.types.ts
+  site.types.ts
 
 scripts/
-  run-playwright.mjs
+  run-playwright.mjs
 
 playwright.config.ts
 package.json
@@ -104,17 +109,19 @@ Tests describe behavior while configuration determines which website and locale 
 
 ```text
 Test
-  ↓
+  ↓
 Page Object
-  ↓
+  ↓
 Reusable Components
-  ↓
+  ↓
+Reusable Link Validation
+  ↓
 Site Context
-  ↓
+  ↓
 Brand + Locale Configuration
-  ↓
+  ↓
 URL Builder
-  ↓
+  ↓
 BRP Website
 ```
 
@@ -130,10 +137,10 @@ Example:
 
 ```ts
 {
-  id: 'canam-offroad',
-  displayName: 'Can-Am Off-Road',
-  origin: 'https://can-am.brp.com',
-  productLinePath: 'off-road',
+  id: 'canam-offroad',
+  displayName: 'Can-Am Off-Road',
+  origin: 'https://can-am.brp.com',
+  productLinePath: 'off-road',
 }
 ```
 
@@ -223,9 +230,9 @@ Configuration priority is:
 
 ```text
 Command-line parameters
-        ↓
+        ↓
 Environment variables
-        ↓
+        ↓
 Default values
 ```
 
@@ -440,6 +447,36 @@ npm test -- --brand=lynx --country=ca --language=fr
 npm test -- --brand=lynx --country=us --language=en
 ```
 
+### Multi-brand / Multi-locale local execution
+
+The framework currently resolves one brand and locale per Playwright execution. For broader local regression coverage, PowerShell can orchestrate multiple executions.
+
+**Run all tests across multiple brands and locales (Windows PowerShell)**
+
+```text
+5 brands × 3 locales = 15 complete Playwright executions
+```
+
+Example:
+
+```powershell
+$brands = @("seadoo", "skidoo", "lynx", "canam-onroad", "canam-offroad")
+$locales = @("ca-en", "ca-fr", "us-en")
+
+foreach ($brand in $brands) {
+    foreach ($locale in $locales) {
+        Write-Host ""
+        Write-Host "========================================"
+        Write-Host "Running ALL TESTS: $brand - $locale"
+        Write-Host "========================================"
+
+        npm test -- --brand $brand --locale $locale --project=chromium
+    }
+}
+```
+
+Not every brand is guaranteed to support every locale. The execution matrix should therefore be adjusted when a brand/locale combination is not available.
+
 ## Available Commands
 
 ```bash
@@ -486,17 +523,17 @@ The CI pipeline validates:
 
 ```text
 Quality Checks
-  ├── Prettier
-  ├── ESLint
-  ├── TypeScript
-  └── Unit Tests
-        ↓
+  ├── Prettier
+  ├── ESLint
+  ├── TypeScript
+  └── Unit Tests
+        ↓
 Playwright Smoke
-  ├── Can-Am Off-Road
-  ├── Can-Am On-Road
-  ├── Sea-Doo
-  ├── Ski-Doo
-  └── Lynx
+  ├── Can-Am Off-Road
+  ├── Can-Am On-Road
+  ├── Sea-Doo
+  ├── Ski-Doo
+  └── Lynx
 ```
 
 Playwright reports and failure artifacts are uploaded by GitHub Actions when applicable.
@@ -516,6 +553,29 @@ Current coverage includes:
 - uppercase locale normalization.
 
 These tests run without requiring browser navigation to the public websites.
+
+## Reusable Link Validator
+
+`utils/link-validator.ts` centralizes shared navigation-link rules used by reusable components.
+
+The validator is responsible for:
+
+- identifying navigable `href` values;
+- excluding anchors and non-navigation protocols such as `javascript:`, `mailto:`, and `tel:`;
+- resolving relative URLs against the current page;
+- identifying links that belong to the current website hostname;
+- excluding links that resolve back to the current page;
+- discovering the first visible internal navigable link from a collection of Playwright locators.
+
+Both `HeaderComponent` and `FooterComponent` delegate internal link discovery to the same validator instead of maintaining duplicated navigation rules.
+
+Unit coverage is provided by:
+
+```text
+tests/unit/link-validator.spec.ts
+```
+
+This abstraction is intended to be reused by additional navigation-oriented coverage such as Full Main Navigation, Discover Brand, and Page Level Navigation.
 
 ## Homepage Smoke Test
 
@@ -545,6 +605,8 @@ Current coverage verifies that:
 5. Clicking the link results in navigation.
 6. Navigation remains within the expected website hostname.
 
+Internal link discovery is delegated to the reusable `LinkValidator`, keeping shared navigation rules outside the Header component itself.
+
 The same tests are reused across supported BRP brands.
 
 ## Shared Footer Navigation Tests
@@ -561,6 +623,8 @@ Current coverage verifies that:
 6. The destination loads successfully.
 
 Footer links are discovered from the content rendered by AEM instead of being hardcoded by label.
+
+Internal link discovery is delegated to the reusable `LinkValidator`, allowing Header and Footer to share the same navigation filtering rules.
 
 For destination validation, the test resolves the selected internal link through its `href` and validates the resulting page response. This keeps footer navigation validation independent from global overlays that may appear asynchronously while scrolling the page.
 
@@ -626,15 +690,15 @@ The intended workflow is:
 
 ```text
 BRP Website
-    ↓
+    ↓
 Navigation Discovery
-    ↓
+    ↓
 test-results/navigation-discovery/*.json
-    ↓
+    ↓
 QA Review
-    ↓
+    ↓
 data/navigation/{brand}/{locale}.json
-    ↓
+    ↓
 Regression Test
 ```
 
@@ -647,7 +711,7 @@ Discovery:
 
 test-results/navigation-discovery/canam-offroad-fi-fi.json
 
-        ↓ QA review
+        ↓ QA review
 
 Regression data:
 
@@ -716,15 +780,15 @@ The intended workflow is:
 
 ```text
 BRP Website
-    ↓
+    ↓
 Navigation Discovery
-    ↓
+    ↓
 test-results/navigation-discovery/*.json
-    ↓
+    ↓
 QA Review
-    ↓
+    ↓
 data/navigation/{brand}/{locale}.json
-    ↓
+    ↓
 Regression Test
 ```
 
@@ -737,7 +801,7 @@ Discovery:
 
 test-results/navigation-discovery/canam-offroad-fi-fi.json
 
-        ↓ QA review
+        ↓ QA review
 
 Regression data:
 
@@ -786,12 +850,14 @@ The `HeaderComponent`, for example, separates the complete header from the main 
 
 ```text
 Header
-  ├── Header content
-  └── Main Navigation
-        └── Navigation Links
+  ├── Header content
+  └── Main Navigation
+        └── Navigation Links
 ```
 
-Tests interact with the component instead of duplicating DOM locators inside specs.
+Header and Footer delegate shared internal-link filtering to `LinkValidator`.
+
+Tests interact with the component instead of duplicating DOM locators or link-validation rules inside specs.
 
 ## Adding Another Brand
 
@@ -799,10 +865,10 @@ Add a new entry to `config/brands.ts`:
 
 ```ts
 'example-brand': {
-  id: 'example-brand',
-  displayName: 'Example Brand',
-  origin: 'https://example.brp.com',
-  productLinePath: 'optional-product-line',
+  id: 'example-brand',
+  displayName: 'Example Brand',
+  origin: 'https://example.brp.com',
+  productLinePath: 'optional-product-line',
 }
 ```
 
@@ -888,6 +954,8 @@ Components should represent reusable functionality such as:
 - dealer locator;
 - lead forms.
 
+Shared link-classification logic should remain in reusable utilities such as `LinkValidator` rather than being duplicated inside individual components.
+
 ## Creating a New Test
 
 Tests should describe behavior.
@@ -914,7 +982,8 @@ The framework currently provides the following coverage:
 
 ```text
 Unit
-  └── URL generation and normalization
+  ├── URL generation and normalization
+  └── Reusable link validation
 
 Smoke
   └── Homepage availability and basic rendering
