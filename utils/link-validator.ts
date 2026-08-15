@@ -55,4 +55,33 @@ export class LinkValidator {
 
     return null;
   }
+
+  async getInternalNavigableUrls(links: Locator): Promise<URL[]> {
+    const count = await links.count();
+    const urls = new Map<string, URL>();
+
+    for (let i = 0; i < count; i++) {
+      const link = links.nth(i);
+
+      const href = await link.getAttribute('href');
+
+      if (!href || !this.isNavigableHref(href)) {
+        continue;
+      }
+
+      const targetUrl = this.resolveUrl(href);
+
+      if (!this.isInternalUrl(targetUrl)) {
+        continue;
+      }
+
+      if (this.isCurrentPage(targetUrl)) {
+        continue;
+      }
+
+      urls.set(targetUrl.href, targetUrl);
+    }
+
+    return Array.from(urls.values());
+  }
 }

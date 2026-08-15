@@ -46,4 +46,55 @@ test.describe('LinkValidator', () => {
 
     expect(validator.isCurrentPage(new URL('https://www.example.com/products'))).toBeFalsy();
   });
+
+  test('returns all unique internal navigable URLs', async ({ page }) => {
+    const validator = new LinkValidator(page);
+
+    await page.setContent(`
+      <nav>
+        <a href="/products">Products</a>
+        <a href="/products">Products duplicate</a>
+        <a href="/accessories">Accessories</a>
+        <a href="https://www.example.com/dealers">Dealers</a>
+        <a href="https://external.example.org/page">External</a>
+        <a href="#section">Anchor</a>
+        <a href="mailto:test@example.com">Email</a>
+        <a href="tel:+15555555555">Phone</a>
+        <a href="javascript:void(0)">JavaScript</a>
+      </nav>
+    `);
+
+    const links = page.locator('nav a[href]');
+
+    const urls = await validator.getInternalNavigableUrls(links);
+
+    expect(urls.map((url) => url.href)).toEqual([
+      'https://www.example.com/products',
+      'https://www.example.com/accessories',
+      'https://www.example.com/dealers',
+    ]);
+  });
+
+  test('includes internal links even when they are not currently visible', async ({ page }) => {
+    const validator = new LinkValidator(page);
+
+    await page.setContent(`
+      <nav>
+        <a href="/products">Products</a>
+
+        <div style="display: none">
+          <a href="/hidden-product">Hidden Product</a>
+        </div>
+      </nav>
+    `);
+
+    const links = page.locator('nav a[href]');
+
+    const urls = await validator.getInternalNavigableUrls(links);
+
+    expect(urls.map((url) => url.href)).toEqual([
+      'https://www.example.com/products',
+      'https://www.example.com/hidden-product',
+    ]);
+  });
 });

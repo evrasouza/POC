@@ -34,4 +34,8 @@ export class HeaderComponent {
   async getFirstInternalNavigableLink(): Promise<Locator | null> {
     return this.linkValidator.getFirstInternalNavigableLink(this.links);
   }
+
+  async getInternalNavigableUrls(): Promise<URL[]> {
+    return this.linkValidator.getInternalNavigableUrls(this.links);
+  }
 }
