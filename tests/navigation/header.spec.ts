@@ -1,8 +1,17 @@
 // tests/navigation/header.spec.ts
 import { test, expect } from '../../fixtures/test.fixture.js';
+import { setAllureMetadata } from '../../utils/allure-metadata.js';
 
 test.describe('Global Header', () => {
   test('displays the shared global navigation', async ({ homePage, site }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Header',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
     test.info().annotations.push({
       type: 'site',
       description: `${site.brand.displayName} ${site.locale}`,
@@ -22,6 +31,14 @@ test.describe('Global Header', () => {
     homePage,
     site,
   }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Header',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
     test.info().annotations.push({
       type: 'site',
       description: `${site.brand.displayName} ${site.locale}`,
@@ -48,6 +65,14 @@ test.describe('Global Header', () => {
   });
 
   test('validates all internal main navigation destinations', async ({ homePage, page, site }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Header',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
     test.info().annotations.push({
       type: 'site',
       description: `${site.brand.displayName} ${site.locale}`,
