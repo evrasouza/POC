@@ -1,8 +1,17 @@
 // tests/navigation/footer.spec.ts
 import { test, expect } from '../../fixtures/test.fixture.js';
+import { setAllureMetadata } from '../../utils/allure-metadata.js';
 
 test.describe('Global Footer', () => {
   test('displays the shared global footer', async ({ homePage, site }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Footer',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
     test.info().annotations.push({
       type: 'site',
       description: `${site.brand.displayName} ${site.locale}`,
@@ -22,6 +31,14 @@ test.describe('Global Footer', () => {
     page,
     site,
   }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Footer',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
     await homePage.goto();
 
     await homePage.footer.root.scrollIntoViewIfNeeded();

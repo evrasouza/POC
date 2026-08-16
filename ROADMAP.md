@@ -4,7 +4,7 @@ This roadmap defines the recommended evolution of the Playwright POC for BRP pub
 
 The strategy is to start with stable and reusable structural validations, then progressively introduce PDP components, business flows, and stateful or third-party integrations.
 
-> **Current focus:** 🟡 Phase 1 — Reusable Link Validator
+> **Current focus:** 🟡 Phase 1 — Full Main Navigation Validation
 
 ---
 
@@ -21,6 +21,7 @@ The strategy is to start with stable and reusable structural validations, then p
 
 ### 🛠️ Supporting Infrastructure
 
+- ✅ **Reusable Link Validator** — shared internal-link filtering and URL resolution used by Header and Footer components.
 - ✅ **Cookie Consent handling** — reusable handling for Axeptio consent dialogs.
 - ✅ **Promotional / Lead Generation modal handling** — reusable handling for shared promotional overlays.
 - ✅ **Multi-brand / Multi-locale execution** — tests can run against multiple BRP brands and locales through configuration-driven execution.
@@ -34,8 +35,8 @@ The strategy is to start with stable and reusable structural validations, then p
 **Goal:** establish reusable navigation validation that can be shared across brands, locales, and AEM components.
 
 - [x] ✅ **Footer Navigation** — validate footer visibility, discover navigable internal links, and verify destinations.
-- [ ] 🟡 **Reusable Link Validator** — extract shared internal and external link validation logic for reuse across navigation components. **← NEXT**
-- [ ] ⚪ **Full Main Navigation Validation** — evolve the current header coverage from a single internal link to complete menu validation.
+- [x] ✅ **Reusable Link Validator** — shared internal navigation filtering and URL resolution reused by Header and Footer components.
+- [ ] 🟡 **Full Main Navigation Validation** — evolve the current header coverage from a single internal link to complete menu validation. **← NEXT**
 - [ ] ⚪ **Discover Brand Navigation** — validate that Discover Brand entries navigate to valid brand pages.
 
 ### ✅ Completed — Footer Navigation
@@ -57,6 +58,35 @@ For destination validation, the footer test resolves the selected internal link 
 This is intentional. Sea-Doo and Ski-Doo can trigger global Cookie Consent and Lead Generation overlays asynchronously while scrolling to the footer. These overlays may intercept pointer events even when the footer and its link are valid.
 
 Overlay behavior is handled independently by reusable framework components so that an unrelated global popup does not produce a false Footer Navigation failure.
+
+### ✅ Completed — Reusable Link Validator
+
+Shared link-validation behavior has been extracted into `utils/link-validator.ts`.
+
+The validator centralizes navigation rules that were previously duplicated between Header and Footer components.
+
+Current responsibilities include:
+
+- Identifying navigable `href` values.
+- Excluding anchors, `javascript:`, `mailto:`, and `tel:` links.
+- Resolving relative destinations against the current page URL.
+- Identifying URLs that belong to the current website hostname.
+- Excluding destinations that resolve to the current page.
+- Discovering visible internal navigable links from Playwright locator collections.
+
+`HeaderComponent` and `FooterComponent` now delegate internal link discovery to the reusable validator.
+
+Unit coverage was added under:
+
+```text
+tests/unit/link-validator.spec.ts
+```
+
+The implementation was validated across Sea-Doo, Ski-Doo, Lynx, Can-Am On-Road, and Can-Am Off-Road using CA-EN, CA-FR, and US-EN executions.
+
+A small number of initial Header/Footer failures were associated with asynchronous Cookie Consent / Lead Generation overlays and passed during isolated revalidation, indicating interaction timing rather than a Link Validator regression.
+
+This shared abstraction is now available for Full Main Navigation, Discover Brand, Page Level Navigation, and future navigation-oriented smoke coverage.
 
 ### 🛠️ Supporting Infrastructure — Global Overlay Handling
 
@@ -125,15 +155,22 @@ components/
 pages/
   home.page.ts
 
+utils/
+  link-validator.ts
+
 tests/
   debug/
     overlays.spec.ts
   navigation/
     footer.spec.ts
     header.spec.ts
+  unit/
+    link-validator.spec.ts
 ```
 
-The next architectural step is to introduce a reusable Link Validator so shared navigation rules do not need to be duplicated between Header, Footer, Discover Brand, Page Level Navigation, and other navigation-oriented smoke tests.
+The reusable Link Validator is now part of the navigation foundation.
+
+The next architectural step is to evolve Global Header coverage from a single internal navigation path to complete main-navigation validation.
 
 ---
 
@@ -214,6 +251,10 @@ Avoid assertions against labels that AEM authors can legitimately change unless 
 
 Where appropriate, validate what AEM rendered instead of maintaining large static lists of authored content.
 
+### Reuse link-classification rules
+
+Shared rules for identifying valid internal navigation links should remain centralized in the reusable `LinkValidator` instead of being duplicated across Header, Footer, Discover Brand, Page Level Navigation, or future components.
+
 ### Separate structural and business validation
 
 Navigation health checks should remain separate from complete business-flow assertions.
@@ -267,9 +308,9 @@ A roadmap feature is considered complete when:
 ```text
 Phase 1 — Navigation Foundation
         ↓
-🟡 Reusable Link Validator ← NEXT
+✅ Reusable Link Validator
         ↓
-Full Main Navigation Validation
+🟡 Full Main Navigation Validation ← NEXT
         ↓
 Discover Brand Navigation
         ↓
@@ -298,14 +339,15 @@ Implemented / Existing Coverage
 └── ✅ Navigation Discovery
 
 Supporting Infrastructure
+├── ✅ Reusable Link Validator
 ├── ✅ Cookie Consent handling
 ├── ✅ Promotional / Lead Generation modal handling
 └── ✅ Multi-brand / Multi-locale execution
 
 Phase 1
 ├── ✅ Footer Navigation
-├── 🟡 Reusable Link Validator        ← NEXT
-├── ⚪ Full Main Navigation
+├── ✅ Reusable Link Validator
+├── 🟡 Full Main Navigation        ← NEXT
 └── ⚪ Discover Brand Navigation
 ```
 

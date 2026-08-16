@@ -1,9 +1,13 @@
 import type { Locator, Page } from '@playwright/test';
 
+import { LinkValidator } from '../utils/link-validator.js';
+
 export class HeaderComponent {
   readonly root: Locator;
   readonly navigation: Locator;
   readonly links: Locator;
+
+  private readonly linkValidator: LinkValidator;
 
   constructor(private readonly page: Page) {
     this.root = page.locator('header, [role="banner"]').first();
@@ -11,6 +15,8 @@ export class HeaderComponent {
     this.navigation = this.root.locator('nav, [role="navigation"]').first();
 
     this.links = this.navigation.locator('a[href]');
+
+    this.linkValidator = new LinkValidator(page);
   }
 
   async isVisible(): Promise<boolean> {
@@ -26,44 +32,10 @@ export class HeaderComponent {
   }
 
   async getFirstInternalNavigableLink(): Promise<Locator | null> {
-    const count = await this.links.count();
-    const currentHostname = new URL(this.page.url()).hostname;
+    return this.linkValidator.getFirstInternalNavigableLink(this.links);
+  }
 
-    for (let i = 0; i < count; i++) {
-      const link = this.links.nth(i);
-
-      if (!(await link.isVisible())) {
-        continue;
-      }
-
-      const href = await link.getAttribute('href');
-
-      if (!href) {
-        continue;
-      }
-
-      if (
-        href.startsWith('#') ||
-        href.startsWith('javascript:') ||
-        href.startsWith('mailto:') ||
-        href.startsWith('tel:')
-      ) {
-        continue;
-      }
-
-      const targetUrl = new URL(href, this.page.url());
-
-      if (targetUrl.hostname !== currentHostname) {
-        continue;
-      }
-
-      if (targetUrl.href === this.page.url()) {
-        continue;
-      }
-
-      return link;
-    }
-
-    return null;
+  async getInternalNavigableUrls(): Promise<URL[]> {
+    return this.linkValidator.getInternalNavigableUrls(this.links);
   }
 }

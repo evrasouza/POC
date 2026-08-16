@@ -1,8 +1,17 @@
 // tests/navigation/header.spec.ts
 import { test, expect } from '../../fixtures/test.fixture.js';
+import { setAllureMetadata } from '../../utils/allure-metadata.js';
 
 test.describe('Global Header', () => {
   test('displays the shared global navigation', async ({ homePage, site }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Header',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
     test.info().annotations.push({
       type: 'site',
       description: `${site.brand.displayName} ${site.locale}`,
@@ -18,24 +27,75 @@ test.describe('Global Header', () => {
     expect(linkCount, 'Expected the global header to contain navigable links').toBeGreaterThan(0);
   });
 
-  test('navigates through an internal header link', async ({ homePage, page, site }) => {
+  test('discovers internal navigable destinations from the main navigation', async ({
+    homePage,
+    site,
+  }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Header',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
+    test.info().annotations.push({
+      type: 'site',
+      description: `${site.brand.displayName} ${site.locale}`,
+    });
+
     await homePage.goto();
 
     await homePage.prepareForInteraction();
 
-    const initialUrl = page.url();
-
-    const link = await homePage.header.getFirstInternalNavigableLink();
+    const urls = await homePage.header.getInternalNavigableUrls();
 
     expect(
-      link,
-      `Expected an internal navigable link in the ${site.brand.displayName} header`,
-    ).not.toBeNull();
+      urls.length,
+      `Expected the ${site.brand.displayName} main navigation to contain internal navigable destinations`,
+    ).toBeGreaterThan(0);
 
-    await link!.click();
+    const expectedHostname = new URL(site.baseUrl).hostname;
 
-    await expect(page).not.toHaveURL(initialUrl);
+    for (const url of urls) {
+      expect(url.hostname, `Expected ${url.href} to belong to ${expectedHostname}`).toBe(
+        expectedHostname,
+      );
+    }
+  });
 
-    expect(new URL(page.url()).hostname).toBe(new URL(site.baseUrl).hostname);
+  test('validates all internal main navigation destinations', async ({ homePage, page, site }) => {
+    await setAllureMetadata({
+      epic: 'BRP Websites',
+      feature: 'Navigation',
+      story: 'Global Header',
+      severity: 'critical',
+      layer: 'e2e',
+    });
+
+    test.info().annotations.push({
+      type: 'site',
+      description: `${site.brand.displayName} ${site.locale}`,
+    });
+
+    await homePage.goto();
+
+    await homePage.prepareForInteraction();
+
+    const urls = await homePage.header.getInternalNavigableUrls();
+
+    expect(
+      urls.length,
+      `Expected the ${site.brand.displayName} main navigation to contain internal navigable destinations`,
+    ).toBeGreaterThan(0);
+
+    for (const url of urls) {
+      const response = await page.request.get(url.href);
+
+      expect(
+        response.ok(),
+        `Expected ${url.href} to load successfully but received HTTP ${response.status()}`,
+      ).toBeTruthy();
+    }
   });
 });
