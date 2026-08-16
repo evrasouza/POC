@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import os from 'node:os';
 
 const videoMode = process.env.VIDEO === 'on' ? 'on' : 'retain-on-failure';
 
@@ -69,6 +70,31 @@ export default defineConfig({
         outputFile: `${reportDirectory}/junit.xml`,
         includeProjectInTestName: true,
         stripANSIControlSequences: true,
+      },
+    ],
+
+    [
+      'allure-playwright',
+      {
+        resultsDir: `${reportDirectory}/allure-results`,
+
+        detail: true,
+
+        environmentInfo: {
+          brand,
+          locale,
+          run_id: runId,
+          node_version: process.version,
+          os_platform: os.platform(),
+          os_release: os.release(),
+          os_version: os.version(),
+        },
+
+        globalLabels: {
+          brand,
+          locale,
+          framework: 'playwright',
+        },
       },
     ],
   ],

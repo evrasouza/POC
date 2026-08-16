@@ -106,10 +106,17 @@ child.on('exit', (code, signal) => {
   console.log('Test Execution Finished');
   console.log('========================================');
   console.log(`Run ID: ${runId}`);
-  console.log(`Report: ${path.join(reportDirectory, 'html')}`);
+  console.log(`HTML:   ${path.join(reportDirectory, 'html')}`);
+  console.log(`Allure: ${path.join(reportDirectory, 'allure-results')}`);
   console.log('');
-  console.log('Open latest report with:');
+  console.log('Open latest Playwright report with:');
   console.log('npm run report:latest');
+  console.log('');
+  console.log('Generate latest Allure report with:');
+  console.log('npm run report:allure');
+  console.log('');
+  console.log('Generate and open latest Allure report with:');
+  console.log('npm run report:allure:open');
   console.log('========================================');
   console.log('');
 
